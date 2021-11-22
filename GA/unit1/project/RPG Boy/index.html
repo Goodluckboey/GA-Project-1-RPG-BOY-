@@ -8,10 +8,6 @@
     <title>RPG Boy</title>
 </head>
 <body>
-    <audio>
-        <source id="footsteps" src="footsteps_grass.mp3" type="audio/mpeg">
-      Your browser does not support the audio element.
-      </audio>
     <img id='background' src="darkerGrass.png" alt="grassBG">
     <div id=body-words>
         RPG BOY
@@ -21,7 +17,13 @@
         Your browser does not support the HTML5 canvas tag.
     </canvas>
 </div>
-    
+<audio controls>
+    <source src="bg_music.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+  </audio>
+  <div id='startLogo'>
+    <img id='startImage' src="startscreen_1.png" alt="startScreen">
+    </div>
     <script src="script.js" charset="utf-8"></script>
 </body>
 </html>

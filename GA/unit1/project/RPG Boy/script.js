@@ -13,10 +13,12 @@ pk1.img.src = "char.png"
 // ---------------------------------------------------
 
 // GAME OVER VARIABLES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+let gameStartTrigger = false
 let gameOverTrigger = false
 const gameOver = {img:null, x:50, y:50, width:500, height:500, currentframe:0, totalframes:1}
 gameOver.img = new Image()
 gameOver.img.src = "game-over.png"
+
 // ---------------------------------------------------
 
 // MONSTER VARIABLES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -30,12 +32,8 @@ monster.img.src = "enemy_walk.png"
 window.onload = function() {
     pk1 = setInterval(animationFunction,25)
     // monster = setInterval(animatePk1,25)
-    setInterval()
+    footsteps = new sound("footsteps_grass.mp3")
   };
-  function produceNumbers (){
-    const randomNum1 = Math.ceil(Math.random() * 1464)
-    const randomNum2 = Math.ceil(Math.random() * 800)
-  }
   const randomNum1 = Math.ceil(Math.random() * 1464)
   const randomNum2 = Math.ceil(Math.random() * 800)
   console.log(`${randomNum1},${randomNum2}`)
@@ -52,6 +50,7 @@ let monsterStats = {
     health: 5000,
 }
 
+
 function animationFunction () {
     context.clearRect(0,0,canvas.width, canvas.height);
     context.drawImage(pk1.img, pk1.currentframe * pk1.width , 0 , pk1.width , pk1.height , heroPosX ,heroPosY , pk1.width * 2, pk1.height * 2)
@@ -66,6 +65,7 @@ function animationFunction () {
         context.drawImage(gameOver.img, 5 , 10 , 600 , 500 , 600 , 250 , 350, 300)
         gameOverTrigger = true
         pk1.img.src = 'tombstone_sprite.png'
+        pk1.currentframe++;
     }
     
     if(pk1.currentframe>=pk1.totalframes){
@@ -76,7 +76,13 @@ function animationFunction () {
 
 window.addEventListener("keydown", function(e) {
     // console.log(`You pressed button ${e.key}.`)
-    if (gameOverTrigger === false){
+    if(e.key === 'Enter'){
+        const startLogo = document.getElementById('startLogo')
+        startLogo.remove()
+        gameStartTrigger = true
+        }
+
+    if ((gameOverTrigger === false) && (gameStartTrigger === true)){
         if(((e.key === 'ArrowUp') || (e.key === 'w')) && (heroPosY > 0)){ 
             heroPosY-=8
             pk1.currentframe++;
@@ -121,8 +127,8 @@ window.addEventListener("keydown", function(e) {
             }       
         }
         if ((e.key === ' ') && ((directionChecker === 'right') || (directionChecker === 'atk-right'))){
-            if ((pk1.img.src === "hero_attack.png") === false){
-                pk1.img.src = "hero_attack.png"
+            if ((pk1.img.src === "atk-advanced.png") === false){
+                pk1.img.src = "atk-advanced.png"
                 pk1.currentframe++;
                 directionChecker = 'atk-right'
                 const atkDiv = document.createElement('div')
@@ -136,8 +142,8 @@ window.addEventListener("keydown", function(e) {
     
             }
         if ((e.key === ' ') && ((directionChecker === 'left') || (directionChecker === 'atk-left'))){
-            if ((pk1.img.src === "hero_attack_reverse.png") === false){
-                pk1.img.src = "hero_attack_reverse.png"
+            if ((pk1.img.src === "atk-advanced-reversed.png") === false){
+                pk1.img.src = "atk-advanced-reversed.png"
                 pk1.currentframe++;
                 directionChecker = 'atk-left'
             } else {
