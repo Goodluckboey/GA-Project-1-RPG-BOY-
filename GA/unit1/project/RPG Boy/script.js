@@ -10,6 +10,10 @@ let directionChecker = 'right'
 const pk1 = {img:null, x:0, y:0, width:32, height:32, currentframe:0, totalframes:5}
 pk1.img = new Image()
 pk1.img.src = "char.png"
+
+let heroStats = {
+    health: 100,
+}
 // ---------------------------------------------------
 
 // GAME OVER VARIABLES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -26,6 +30,10 @@ const monsterTimer = null;
 const monster = {img:null, x:50, y:50, width:32, height:32, currentframe:0, totalframes:5}
 monster.img = new Image()
 monster.img.src = "enemy_walk.png"
+
+let monsterStats = {
+    health: 20,
+}
 // ---------------------------------------------------
 
 
@@ -34,21 +42,17 @@ window.onload = function() {
     // monster = setInterval(animatePk1,25)
     footsteps = new sound("footsteps_grass.mp3")
   };
-  const randomNum1 = Math.ceil(Math.random() * 1464)
-  const randomNum2 = Math.ceil(Math.random() * 800)
+  const randomNum1 = Math.ceil(Math.random() * 1350)
+  const randomNum2 = Math.ceil(Math.random() * 700)
   console.log(`${randomNum1},${randomNum2}`)
   function createMonster (whereX,whereY) {
     const madeMonster = context.drawImage(monster.img, monster.currentframe * monster.width , 0 , monster.width , monster.height , whereX ,whereY , monster.width * 2, monster.height * 2)
 
 }
 
-let heroStats = {
-    health: 100,
-}
 
-let monsterStats = {
-    health: 5000,
-}
+
+
 
 
 function animationFunction () {
@@ -56,7 +60,7 @@ function animationFunction () {
     context.drawImage(pk1.img, pk1.currentframe * pk1.width , 0 , pk1.width , pk1.height , heroPosX ,heroPosY , pk1.width * 2, pk1.height * 2)
     createMonster(randomNum1,randomNum2)
 
-    if ((((randomNum1 - 29) < heroPosX ) && (heroPosX < (randomNum1 + 29))) && (((randomNum2 - 50) < heroPosY ) && (heroPosY < (randomNum2 + 50))) && (heroStats.health > (-1))) {
+    if ((((randomNum1 - 30) < heroPosX ) && (heroPosX < (randomNum1 + 30))) && (((randomNum2 - 50) < heroPosY ) && (heroPosY < (randomNum2 + 50))) && (heroStats.health > (-1))) {
         heroStats.health -= 1
         console.log(`Health remaining: ${heroStats.health}`)
     }
@@ -124,7 +128,7 @@ window.addEventListener("keydown", function(e) {
                 console.log
                 pk1.img.src = "char.png"
                 directionChecker = 'right'
-            }       
+            }
         }
         if ((e.key === ' ') && ((directionChecker === 'right') || (directionChecker === 'atk-right'))){
             if ((pk1.img.src === "atk-advanced.png") === false){
@@ -134,8 +138,11 @@ window.addEventListener("keydown", function(e) {
                 const atkDiv = document.createElement('div')
                 atkDiv.setAttribute('id','damage')
                 canvas.append(atkDiv)
-                // pk1.attack = atkDiv
-                // console.log(pk1.attack)
+
+                if ((((randomNum1 - 45) < heroPosX ) && (heroPosX < (randomNum1 + 45))) && (((randomNum2 - 70) < heroPosY ) && (heroPosY < (randomNum2 + 70))) && (monsterStats.health > (0))) {
+                    monsterStats.health -= 1
+                    console.log(`Health remaining: ${monsterStats.health}`)
+                } // Checks if within range. If so, minus health from monster.
             } else {
                 pk1.currentframe++;
             }
