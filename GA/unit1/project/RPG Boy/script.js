@@ -63,9 +63,9 @@ function animationFunction () {
     }
 
     if (heroStats.health < 0){
-        context.drawImage(gameOver.img, 5 , 10 , 600 , 500 , 400 , 200 , 700, 600)
+        context.drawImage(gameOver.img, 5 , 10 , 600 , 500 , 600 , 250 , 350, 300)
         gameOverTrigger = true
-        pk1.img.src = 'tombstone.png'
+        pk1.img.src = 'tombstone_sprite.png'
     }
     
     if(pk1.currentframe>=pk1.totalframes){
