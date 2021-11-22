@@ -7,7 +7,7 @@ const pk1Timer = null;
 let heroPosX = 0 //limit = 688
 let heroPosY = 0 //limit = 344
 let directionChecker = 'right'
-const pk1 = {img:null, x:0, y:0, width:32, height:32, currentframe:0, totalframes:5}
+const pk1 = {img:null, width:32, height:32, currentframe:0, totalframes:5}
 pk1.img = new Image()
 pk1.img.src = "char.png"
 
@@ -19,7 +19,7 @@ let heroStats = {
 // GAME OVER VARIABLES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 let gameStartTrigger = false
 let gameOverTrigger = false
-const gameOver = {img:null, x:50, y:50, width:500, height:500, currentframe:0, totalframes:1}
+const gameOver = {img:null, width:500, height:500, currentframe:0, totalframes:1}
 gameOver.img = new Image()
 gameOver.img.src = "game-over.png"
 
@@ -27,7 +27,7 @@ gameOver.img.src = "game-over.png"
 
 // MONSTER VARIABLES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 const monsterTimer = null;
-const monster = {img:null, x:50, y:50, width:32, height:32, currentframe:0, totalframes:5}
+const monster = {img:null, width:32, height:32, currentframe:0, totalframes:5}
 monster.img = new Image()
 monster.img.src = "enemy_walk.png"
 
@@ -49,11 +49,6 @@ window.onload = function() {
     const madeMonster = context.drawImage(monster.img, monster.currentframe * monster.width , 0 , monster.width , monster.height , whereX ,whereY , monster.width * 2, monster.height * 2)
 
 }
-
-
-
-
-
 
 function animationFunction () {
     context.clearRect(0,0,canvas.width, canvas.height);
@@ -139,7 +134,7 @@ window.addEventListener("keydown", function(e) {
                 atkDiv.setAttribute('id','damage')
                 canvas.append(atkDiv)
 
-                if ((((randomNum1 - 45) < heroPosX ) && (heroPosX < (randomNum1 + 45))) && (((randomNum2 - 70) < heroPosY ) && (heroPosY < (randomNum2 + 70))) && (monsterStats.health > (0))) {
+                if ((((randomNum1 - 55) < heroPosX ) && (heroPosX < (randomNum1 + 5))) && (((randomNum2 - 70) < heroPosY ) && (heroPosY < (randomNum2 + 70))) && (monsterStats.health > (0))) {
                     monsterStats.health -= 1
                     console.log(`Health remaining: ${monsterStats.health}`)
                 } // Checks if within range. If so, minus health from monster.
