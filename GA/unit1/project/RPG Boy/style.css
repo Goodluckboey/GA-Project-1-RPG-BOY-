@@ -1,7 +1,7 @@
 body {
     margin: auto;
     max-width: 1464px;
-    background-image: url(sky.png);
+    background-image: url(assets\sky.png);
     background-repeat: no-repeat;
     background-size: 100% 100%;
     position: relative;
