@@ -7,11 +7,11 @@ const pk1 = {img:null, width:32, height:32, currentframe:0, totalframes:5}
 pk1.img = new Image()
 pk1.img.src = "assets/char.png"
 let Herosize = 2;
-
+let heroRange = 65
 let heroHealthBar = document.getElementById("health")
 let heroStats = {
-    maxHealth: 300,
-    currentHealth: 300
+    maxHealth: 150,
+    currentHealth: 150
 }
 
 function drawHero () {
@@ -25,14 +25,15 @@ function getDamage (){
   let item = null;
   for (let i = 0; i < monList.length; i++){ // => For every object in monList
     item = monList[i];
-    if((heroPosX < item.position.x + 50) && (heroPosX > item.position.x - 50) && (heroPosY < item.position.y + 50) && (heroPosY > item.position.y - 50) && (gameStartTrigger === true)){
-      if(heroStats.currentHealth > 0){
+    if((heroPosX < item.position.x + 40) && (heroPosX > item.position.x - 40) && (heroPosY < item.position.y + 40) && (heroPosY > item.position.y - 40) && (gameStartTrigger === true)){
+      if(item.status === 'alive'){
+        if(heroStats.currentHealth > 0){
         heroStats.currentHealth --
       } else {
         gameOverTrigger = true
         pk1.img.src = 'assets/tombstone_sprite.png'
         pk1.currentframe++;
-      }
+      }}
 
   }
     }
@@ -113,16 +114,7 @@ window.addEventListener("keydown", function(e) {
             pk1.img.src = "assets/atk-advanced.png"
             pk1.currentframe++;
             directionChecker = 'atk-right'
-            const atkDiv = document.createElement('div')
-            atkDiv.setAttribute('id','damage')
-            canvas.append(atkDiv)
-
-            // if ((((randomNum1 - 55) < heroPosX ) && (heroPosX < (randomNum1 + 5))) && (((randomNum2 - 70) < heroPosY ) && (heroPosY < (randomNum2 + 70))) && (monsterStats.health > (0))) {
-            //     monsterStats.health -= 1
-            //     console.log(`Health remaining: ${monsterStats.health}`)
-            // } // Checks if within range. If so, minus health from monster.
         }
-
         }
     if ((e.key === ' ') && ((directionChecker === 'left') || (directionChecker === 'atk-left'))){
         if ((pk1.img.src === "assets/atk-advanced-reversed.png") === false){
@@ -130,21 +122,37 @@ window.addEventListener("keydown", function(e) {
             pk1.currentframe++;
             directionChecker = 'atk-left'
         }
+      }
+    if (e.key === ' '){
+      let monster = null;
+      for (let i = 0; i < monList.length; i++){ // => For every object in monList
+        monster = monList[i];
+        if((heroPosX < monster.position.x + heroRange) && (heroPosX > monster.position.x - heroRange) && (heroPosY < monster.position.y + heroRange) && (heroPosY > monster.position.y - heroRange) && (gameStartTrigger === true)){
+          if(monster.health > 0){
+            monster.health -=5
+            console.log(`This monster has ${monster.health} hp left!`)
+          }else {
+            monster.status = 'dead'
+            console.log('This monster is dead!')
+            monster.position.x = 9999
+            monster.position.y = 9999
+          }
+        }
+      }
+    }
+  }
 }
 
-    }
-
-// If 'SPACE' is pressed, and heroPosX/Y coincides with EnemyPosX/y, deal damage. else if heroPosX/Y coincides with EnemyPosX/y receive damage.
-// posX += 8
 // console.log(`You pressed button ${e.key}.`)
 
-}
+
 );
 
 
 // ---------------------------------------------------
 
 // MONSTER VARIABLES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+const NUMBER_OF_MONSTERS = 4
 const monsterTimer = null;
 const monster = {img:null, width:32, height:32, currentframe:0, totalframes:5}
 monster.img = new Image()
@@ -177,7 +185,8 @@ function makeMonster (){ // creates an object with position, velocity and health
       x: produceRandomVelocity(),
       y: produceRandomVelocity()
       },
-      health: 20
+      health: 20,
+      status: 'alive'
     }
   )}
 } // Number of objects created is limited to variable NUMBER_OF_MONSTERS in initialization.
@@ -201,25 +210,26 @@ function moveMonster(){
   let item;
   for (let i =0; i < monList.length; i++){ // => For every object in monList
     item = monList[i];
-    item.position.x += item.velocity.x;
-      if (item.position.x > 1464){
-        item.position.x = -32;
-      } else if (item.position.x < -32){
-        item.position.x = 1464
+    if(item.status === 'alive')
+      {item.position.x += item.velocity.x;
+      if (item.position.x > 1400){
+        item.position.x = -16;
+      } else if (item.position.x < -16){
+        item.position.x = 1400
       }
-      if (item.position.y > 824){
-        item.position.y = -32;
-      } else if (item.position.x < -32){
-        item.position.y = 824
+      if (item.position.y > 780){
+        item.position.y = -16;
+      } else if (item.position.x < -16){
+        item.position.y = 780
       }
     item.position.y += item.velocity.y
+    console.log(`${item.position.x}, ${item.position.y}`)}
   }
 }
 // ---------------------------------------------------
 
 // INITIALIZING  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 const ANIMATION_INTERVAL = 25
-const NUMBER_OF_MONSTERS = 20
 const canvas = document.getElementById('canvas')
 const context = canvas.getContext("2d")
 let gameStartTrigger = false
@@ -258,7 +268,7 @@ makeMonster()
 
 // ---------------------------------------------------
 
-
+// Questions to ask: How to refresh the page without refreshing the page physically(javascript)?, how to change the color of the progress bar?
 
 
 

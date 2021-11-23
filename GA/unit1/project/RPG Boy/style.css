@@ -10,14 +10,15 @@ body {
 #health {
     position:relative;
     height:48px;
-    top: 50px;
-    width:50%;
+    bottom: 55px;
+    left: 100px;
+    width:93.5%;
 }
 
 #body-words{
-    margin: auto;
     max-width: 200px;
     padding: 10px;
+    left: 20px;
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 40px;
 }
