@@ -6,13 +6,14 @@ let directionChecker = 'right'
 const pk1 = {img:null, width:32, height:32, currentframe:0, totalframes:5}
 pk1.img = new Image()
 pk1.img.src = "assets/char.png"
-
+let heroHealthBar = document.getElementById("health")
+let Herosize = 2;
 let heroStats = {
-    health: 100,
+    health: 100
 }
 
 function drawHero () {
-  context.drawImage(pk1.img, pk1.currentframe * 32 , 0 , 32 , 32 , heroPosX ,heroPosY , 32 * 2, 32 * 2) // Draws Hero on canvas at heroPosX and heroPosY coordinates.
+  context.drawImage(pk1.img, pk1.currentframe * 32 , 0 , 32 , 32 , heroPosX ,heroPosY , 32 * Herosize, 32 * Herosize) // Draws Hero on canvas at heroPosX and heroPosY coordinates.
   if(pk1.currentframe>=pk1.totalframes){
     pk1.currentframe = 0
   }
@@ -26,8 +27,11 @@ window.addEventListener("keydown", function(e) {
     gameStartTrigger = true
   }
   if ((gameOverTrigger === false) && (gameStartTrigger === true)){
-    if(((e.key === 'ArrowUp') || (e.key === 'w')) && (heroPosY > 0)){ 
+    if(((e.key === 'ArrowUp') || (e.key === 'w'))){ 
         heroPosY-=12
+        if(heroPosY < -48){
+          heroPosY = 824
+        }
         pk1.currentframe++;
         if(directionChecker === 'atk-right'){
             pk1.img.src = "assets/char.png"
@@ -38,8 +42,11 @@ window.addEventListener("keydown", function(e) {
             directionChecker = 'left'
         } 
     }
-    if (((e.key === 'ArrowDown') || (e.key === 's')) && (heroPosY < 752)){
+    if (((e.key === 'ArrowDown') || (e.key === 's'))){
         heroPosY+=12
+        if(heroPosY > 824){
+          heroPosY = -48
+        }
         pk1.currentframe++;
         if(directionChecker === 'atk-right'){
             pk1.img.src = "assets/char.png"
@@ -51,17 +58,24 @@ window.addEventListener("keydown", function(e) {
         } 
 
     }
-    if(((e.key === 'ArrowLeft') || (e.key === 'a')) && (heroPosX > 0)){
+    if(((e.key === 'ArrowLeft') || (e.key === 'a'))){
         // myAudio.play();
         heroPosX-=12
+        if(heroPosX < -48){
+          heroPosX = 1464
+        }
+
         pk1.currentframe++;
         if ( directionChecker !== 'left'){
             pk1.img.src = "assets/reverse_char.png"
             directionChecker = 'left'
         }
     }
-    if (((e.key === 'ArrowRight') || (e.key === 'd')) && (heroPosX < 1408)){
+    if (((e.key === 'ArrowRight') || (e.key === 'd'))){
         heroPosX+=12
+        if(heroPosX > 1464){
+          heroPosX = -48
+        }
         pk1.currentframe++;
         if ( directionChecker !== 'right'){
             pk1.img.src = "assets/char.png"
@@ -81,8 +95,6 @@ window.addEventListener("keydown", function(e) {
             //     monsterStats.health -= 1
             //     console.log(`Health remaining: ${monsterStats.health}`)
             // } // Checks if within range. If so, minus health from monster.
-        } else {
-            pk1.currentframe++;
         }
 
         }
@@ -91,8 +103,6 @@ window.addEventListener("keydown", function(e) {
             pk1.img.src = "assets/atk-advanced-reversed.png"
             pk1.currentframe++;
             directionChecker = 'atk-left'
-        } else {
-            pk1.currentframe++;
         }
 }
 
@@ -105,6 +115,16 @@ window.addEventListener("keydown", function(e) {
 }
 );
 
+function getDamage (){
+  let item = null;
+  for (let i = 0; i < monList.length; i++){ // => For every object in monList
+    item = monList[i];
+    if((heroPosX < item.position.x + 50) && (heroPosX > item.position.x - 50) && (heroPosY < item.position.y + 50) && (heroPosY > item.position.y - 50)){
+
+    console.log('You got hit!')}
+    }
+  // }
+}
 // ---------------------------------------------------
 
 // MONSTER VARIABLES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -112,8 +132,7 @@ const monsterTimer = null;
 const monster = {img:null, width:32, height:32, currentframe:0, totalframes:5}
 monster.img = new Image()
 monster.img.src = "assets/enemy_walk.png"
-let monsterIdNumber = 1
-let monList = []
+let monList = [];
 // let monsterStats = {
 //     health: 20,
 // }
@@ -125,9 +144,8 @@ function produceMonsterLocationY () {
   return Math.round(Math.random() * 500)
 }
 function produceRandomVelocity(){
-  let num = Math.round(Math.random()*2) + 1; // get random number
+  let num = Math.round(Math.random()*1) + 1; // get random number
   num *= Math.round(Math.random()) ? 1 : -1; // it will either return it as it is, or turn it negative bcos of -1
-  console.log(num)
   return num
 }
 
@@ -193,17 +211,23 @@ gameOver.img.src = "assets/game-over.png"
 
 window.onload = function() {
   setInterval(renderAll,ANIMATION_INTERVAL)
+  setInterval(getDamage,ANIMATION_INTERVAL)
+  
 };
 
 function renderAll (){ // Clears the canvas, then draws everything every 25miliseconds.
 if(gameStartTrigger === true)
-{  context.clearRect(0,0,canvas.width, canvas.height);
+{ context.clearRect(0,0,canvas.width, canvas.height);
+  
   drawMonsterS()
   drawHero()
-  moveMonster()}
+  moveMonster()
+
+  }
 }
 
 makeMonster()
+
 
 // ---------------------------------------------------
 
