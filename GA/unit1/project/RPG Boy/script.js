@@ -27,7 +27,7 @@ window.addEventListener("keydown", function(e) {
   }
   if ((gameOverTrigger === false) && (gameStartTrigger === true)){
     if(((e.key === 'ArrowUp') || (e.key === 'w')) && (heroPosY > 0)){ 
-        heroPosY-=8
+        heroPosY-=12
         pk1.currentframe++;
         if(directionChecker === 'atk-right'){
             pk1.img.src = "assets/char.png"
@@ -39,7 +39,7 @@ window.addEventListener("keydown", function(e) {
         } 
     }
     if (((e.key === 'ArrowDown') || (e.key === 's')) && (heroPosY < 752)){
-        heroPosY+=8
+        heroPosY+=12
         pk1.currentframe++;
         if(directionChecker === 'atk-right'){
             pk1.img.src = "assets/char.png"
@@ -53,7 +53,7 @@ window.addEventListener("keydown", function(e) {
     }
     if(((e.key === 'ArrowLeft') || (e.key === 'a')) && (heroPosX > 0)){
         // myAudio.play();
-        heroPosX-=8
+        heroPosX-=12
         pk1.currentframe++;
         if ( directionChecker !== 'left'){
             pk1.img.src = "assets/reverse_char.png"
@@ -61,10 +61,9 @@ window.addEventListener("keydown", function(e) {
         }
     }
     if (((e.key === 'ArrowRight') || (e.key === 'd')) && (heroPosX < 1408)){
-        heroPosX+=8
+        heroPosX+=12
         pk1.currentframe++;
         if ( directionChecker !== 'right'){
-            console.log
             pk1.img.src = "assets/char.png"
             directionChecker = 'right'
         }
