@@ -126,10 +126,14 @@ function produceMonsterLocationY () {
   return Math.round(Math.random() * 500)
 }
 function produceRandomVelocity(){
-  return Math.round(Math.random() * 16)
+  let num = Math.round(Math.random()*8) + 1; // get random number
+  num *= Math.round(Math.random()) ? 1 : -1; // it will either return it as it is, or turn it negative bcos of -1
+  console.log(num)
+  return num
 }
 
-function makeMonster (){
+function makeMonster (){ // creates an object with position, velocity and health. But wont show up on canvas as it hasnt been drawn yet.
+  for (let i = 0; i < NUMBER_OF_THINGS; i++){
   monList.push({
     position: {
       x: produceMonsterLocationX(),
@@ -138,31 +142,38 @@ function makeMonster (){
       velocity: {
       x: produceRandomVelocity(),
       y: produceRandomVelocity()
-      }
+      },
+      health: 20
     }
-  )
-}
+  )}
+} // Number of objects created is limited to variable NUMBER_OF_THINGS in initialization.
 
-function drawMonster (item) {
-  // const monsterPosX = Math.ceil(Math.random() * 1300)
-  // const monsterPosY = Math.ceil(Math.random() * 500)
+function drawMonster (item) { // Actually draws the monster out, using coordinates from makeMonster()
   context.drawImage(monster.img, monster.currentframe * 32 , 0 , 32 , 32 , item.position.x ,item.position.y , 32 * 2, 32 * 2) // Draws Monster on canvas at monsterPosX and monsterPosY coordinates.
 
-  // if(monster.currentframe>=monster.totalframes){
-  //   monster.currentframe = 0
-//   }
 }
 
-function drawMonsterS(){
+function drawMonsterS(){ // Draws all the monsters out, according to the number of objects in monList.
   let item;
   for (let i = 0; i < monList.length;i++){
     item = monList[i]
     drawMonster(item)
   }
 }
+
+function moveMonster(){
+  let item;
+  for (let i =0; i < monList.length; i++){ // => For every object in monList
+    item = monList[i];
+    item.position.x += item.velocity.x;
+    item.position.y += item.velocity.y
+  }
+}
 // ---------------------------------------------------
 
 // INITIALIZING  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+const ANIMATION_INTERVAL = 25
+const NUMBER_OF_THINGS = 8
 const canvas = document.getElementById('canvas')
 const context = canvas.getContext("2d")
 let gameStartTrigger = false
@@ -172,7 +183,7 @@ gameOver.img = new Image()
 gameOver.img.src = "assets/game-over.png"
 
 window.onload = function() {
-  setInterval(renderAll,25)
+  setInterval(renderAll,ANIMATION_INTERVAL)
 };
 
 function renderAll (){ // Clears the canvas, then draws everything every 25miliseconds.
@@ -180,12 +191,10 @@ function renderAll (){ // Clears the canvas, then draws everything every 25milis
   context.clearRect(0,0,canvas.width, canvas.height);
   drawMonsterS()
   drawHero()
-  
-  //moveMonster()
+  moveMonster()
 }
 
 makeMonster()
-console.log(monList)
 
 // ---------------------------------------------------
 
