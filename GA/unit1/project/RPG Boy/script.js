@@ -152,7 +152,7 @@ window.addEventListener("keydown", function(e) {
 // ---------------------------------------------------
 
 // MONSTER VARIABLES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-const NUMBER_OF_MONSTERS = 1
+const NUMBER_OF_MONSTERS = 20
 const monsterTimer = null;
 const monster = {img:null, width:32, height:32, currentframe:0, totalframes:5}
 monster.img = new Image()
