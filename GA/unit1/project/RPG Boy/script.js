@@ -126,14 +126,14 @@ function produceMonsterLocationY () {
   return Math.round(Math.random() * 500)
 }
 function produceRandomVelocity(){
-  let num = Math.round(Math.random()*8) + 1; // get random number
+  let num = Math.round(Math.random()*2) + 1; // get random number
   num *= Math.round(Math.random()) ? 1 : -1; // it will either return it as it is, or turn it negative bcos of -1
   console.log(num)
   return num
 }
 
 function makeMonster (){ // creates an object with position, velocity and health. But wont show up on canvas as it hasnt been drawn yet.
-  for (let i = 0; i < NUMBER_OF_THINGS; i++){
+  for (let i = 0; i < NUMBER_OF_MONSTERS; i++){
   monList.push({
     position: {
       x: produceMonsterLocationX(),
@@ -146,7 +146,7 @@ function makeMonster (){ // creates an object with position, velocity and health
       health: 20
     }
   )}
-} // Number of objects created is limited to variable NUMBER_OF_THINGS in initialization.
+} // Number of objects created is limited to variable NUMBER_OF_MONSTERS in initialization.
 
 function drawMonster (item) { // Actually draws the monster out, using coordinates from makeMonster()
   context.drawImage(monster.img, monster.currentframe * 32 , 0 , 32 , 32 , item.position.x ,item.position.y , 32 * 2, 32 * 2) // Draws Monster on canvas at monsterPosX and monsterPosY coordinates.
@@ -166,6 +166,16 @@ function moveMonster(){
   for (let i =0; i < monList.length; i++){ // => For every object in monList
     item = monList[i];
     item.position.x += item.velocity.x;
+      if (item.position.x > 1464){
+        item.position.x = 0;
+      } else if (item.position.x < 0){
+        item.position.x = 1464
+      }
+      if (item.position.y > 824){
+        item.position.y = 0;
+      } else if (item.position.x < 0){
+        item.position.y = 824
+      }
     item.position.y += item.velocity.y
   }
 }
@@ -173,7 +183,7 @@ function moveMonster(){
 
 // INITIALIZING  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 const ANIMATION_INTERVAL = 25
-const NUMBER_OF_THINGS = 8
+const NUMBER_OF_MONSTERS = 12
 const canvas = document.getElementById('canvas')
 const context = canvas.getContext("2d")
 let gameStartTrigger = false
@@ -187,11 +197,11 @@ window.onload = function() {
 };
 
 function renderAll (){ // Clears the canvas, then draws everything every 25miliseconds.
-
-  context.clearRect(0,0,canvas.width, canvas.height);
+if(gameStartTrigger === true)
+{  context.clearRect(0,0,canvas.width, canvas.height);
   drawMonsterS()
   drawHero()
-  moveMonster()
+  moveMonster()}
 }
 
 makeMonster()
