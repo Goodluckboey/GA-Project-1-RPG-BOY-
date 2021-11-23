@@ -10,8 +10,8 @@ let Herosize = 2;
 let heroRange = 65
 let heroHealthBar = document.getElementById("health")
 let heroStats = {
-    maxHealth: 150,
-    currentHealth: 150
+    maxHealth: 100,
+    currentHealth: 100
 }
 
 function drawHero () {
@@ -130,10 +130,10 @@ window.addEventListener("keydown", function(e) {
         if((heroPosX < monster.position.x + heroRange) && (heroPosX > monster.position.x - heroRange) && (heroPosY < monster.position.y + heroRange) && (heroPosY > monster.position.y - heroRange) && (gameStartTrigger === true)){
           if(monster.health > 0){
             monster.health -=5
-            console.log(`This monster has ${monster.health} hp left!`)
+            // console.log(`This monster has ${monster.health} hp left!`)
           }else {
             monster.status = 'dead'
-            console.log('This monster is dead!')
+            graveStoneList.push([monster.position.x,monster.position.y])
             monster.position.x = 9999
             monster.position.y = 9999
           }
@@ -157,10 +157,11 @@ const monsterTimer = null;
 const monster = {img:null, width:32, height:32, currentframe:0, totalframes:5}
 monster.img = new Image()
 monster.img.src = "assets/enemy_walk.png"
+const graveStoneObj = {img:null, width:32, height:32, currentframe:0, totalframes:5}
+graveStoneObj.img = new Image()
+graveStoneObj.img.src = "assets/tombstone_sprite.png"
 let monList = [];
-// let monsterStats = {
-//     health: 20,
-// }
+let graveStoneList = []
 
 function produceMonsterLocationX () {
   return Math.round(Math.random() * 1300)
@@ -217,15 +218,25 @@ function moveMonster(){
       } else if (item.position.x < -16){
         item.position.x = 1400
       }
+      item.position.y += item.velocity.y
       if (item.position.y > 780){
         item.position.y = -16;
-      } else if (item.position.x < -16){
+      } else if (item.position.y < -16){
         item.position.y = 780
       }
-    item.position.y += item.velocity.y
-    console.log(`${item.position.x}, ${item.position.y}`)}
+    
+    console.log(`${item.position.x}, ${item.position.y}`)
+   }
   }
 }
+function deadMonster(){
+  let graveStone;
+  for (let i = 0; i < graveStoneList.length; i++){
+    graveStone = graveStoneList[i]
+    context.drawImage(graveStoneObj.img, graveStoneObj.currentframe * 32 , 0 , 32 , 32 , graveStone[0] ,graveStone[1] , 32 * 2, 32 * 2)
+   }
+  }
+
 // ---------------------------------------------------
 
 // INITIALIZING  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -260,6 +271,7 @@ if(gameStartTrigger === true)
   moveMonster()
   gameOverState()
   monster.currentframe++;
+  deadMonster()
   }
 }
 
