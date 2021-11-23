@@ -6,6 +6,10 @@ let gameOverTrigger = false
 const gameOver = {img:null, width:500, height:500, currentframe:0, totalframes:1}
 gameOver.img = new Image()
 gameOver.img.src = "assets/game-over.png"
+
+window.onload = function() {
+  setInterval(renderAll,25)
+};
 // ---------------------------------------------------
 
 // HERO VARIABLES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -20,39 +24,13 @@ pk1.img.src = "assets/char.png"
 let heroStats = {
     health: 100,
 }
-// ---------------------------------------------------
 
-window.onload = function() {
-    setInterval(startGame,25)
-  };
-
-function startGame () {
-  context.clearRect(0,0,canvas.width, canvas.height);
+function drawHero () {
   context.drawImage(pk1.img, pk1.currentframe * 32 , 0 , 32 , 32 , heroPosX ,heroPosY , 32 * 2, 32 * 2) // Draws Hero on canvas at heroPosX and heroPosY coordinates.
   if(pk1.currentframe>=pk1.totalframes){
     pk1.currentframe = 0
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 window.addEventListener("keydown", function(e) {
   // console.log(`You pressed button ${e.key}.`)
@@ -142,19 +120,94 @@ window.addEventListener("keydown", function(e) {
 }
 );
 
-/*
-When windows.onload, press Enter to run startGame()
-startGame() should: 
+// ---------------------------------------------------
 
-context.clearRect(0,0,canvas.width, canvas.height); << To remove all previous frame animation
+// MONSTER VARIABLES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+const monsterTimer = null;
+const monster = {img:null, width:32, height:32, currentframe:0, totalframes:5}
+monster.img = new Image()
+monster.img.src = "assets/enemy_walk.png"
+let monsterIdNumber = 1
+let monList = []
+// let monsterStats = {
+//     health: 20,
+// }
 
-<<
-context.drawImage(pk1.img, pk1.currentframe * pk1.width , 0 , pk1.width , pk1.height , heroPosX ,heroPosY , pk1.width * 2, pk1.height * 2)
+function drawMonster (monsterPosX,monsterPosY) {
+  // const monsterPosX = Math.ceil(Math.random() * 1300)
+  // const monsterPosY = Math.ceil(Math.random() * 500)
+  context.drawImage(monster.img, monster.currentframe * 32 , 0 , 32 , 32 , monsterPosX ,monsterPosY , 32 * 2, 32 * 2) // Draws Monster on canvas at monsterPosX and monsterPosY coordinates.
 
-  if(pk1.currentframe>=pk1.totalframes){
-    pk1.currentframe = 0
+  if(monster.currentframe>=monster.totalframes){
+    monster.currentframe = 0
   }
->>
-This is to draw in the hero and keep him continuously moving. If we keep all the characters same sized, the only thing that should be dynamic is the .img. and heroPosX. heroPosY.
+}
+
+function produceMonsterLocation (numberOfMonsters) {
+  for(i = 0; i < numberOfMonsters; i++){
+    const monsterPosX = Math.ceil(Math.random() * 1300)
+    const monsterPosY = Math.ceil(Math.random() * 500)
+  }
+}// Produce Coordinates before drawing monsters.
+
+// ---------------------------------------------------
+
+function renderAll (){ // Clears the canvas, then draws everything every 25miliseconds.
+  context.clearRect(0,0,canvas.width, canvas.height);
+  drawMonster() 
+  drawHero()
+  
+}
+
+
+
+
+
+
+/* Moving the monsters: 
+Function that chooses between +10 & -10. Then adds it to X or Y.
+
+create a div that floats around the screen.
+Where the div floats, a monster is formed as well.
+
+
+*/
+
+
+
+/* 
+const things = []
+
+function makeThings(){
+  creates a square, with a random position, and a random velocity
+}//this function is called outside of the renderAll
+
+function drawThing(item){
+define how this item will look.
+define "item"'s parameters
+e.g context.fillRect(item.position.x, item.position.y, item.width, item.height);
+}
+
+function drawThings() {
+const item
+for(let i = 0; i < things.length; i++) {
+    item = things[i];
+    drawThing(item);
+  }
+}
+
+function moveThings() {
+  const item = null;
+  for (let i = 0; i < things.length; i++) { // For as many objects as there are in the array-object, add the velocity to the items position.
+    item = things[i];
+    item.position.x = item.position.x + item.velocity.x;
+    item.position.y = item.position.y + item.velocity.y;
+
+    thingRangeCheck(item); // this could be the function to check if the position is out of the canvas or not.
+  }
+}
+
+renderAll() simply needs to call the moveThings(), and drawThings()
+setInterval(renderAll, 25)
 
 */
