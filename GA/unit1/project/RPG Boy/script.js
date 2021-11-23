@@ -1,17 +1,3 @@
-// INITIALIZING  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-const canvas = document.getElementById('canvas')
-const context = canvas.getContext("2d")
-let gameStartTrigger = false
-let gameOverTrigger = false
-const gameOver = {img:null, width:500, height:500, currentframe:0, totalframes:1}
-gameOver.img = new Image()
-gameOver.img.src = "assets/game-over.png"
-
-window.onload = function() {
-  setInterval(renderAll,25)
-};
-// ---------------------------------------------------
-
 // HERO VARIABLES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 const pk1Timer = null;
 let heroPosX = 0 //limit = 688
@@ -133,31 +119,76 @@ let monList = []
 //     health: 20,
 // }
 
-function drawMonster (monsterPosX,monsterPosY) {
-  // const monsterPosX = Math.ceil(Math.random() * 1300)
-  // const monsterPosY = Math.ceil(Math.random() * 500)
-  context.drawImage(monster.img, monster.currentframe * 32 , 0 , 32 , 32 , monsterPosX ,monsterPosY , 32 * 2, 32 * 2) // Draws Monster on canvas at monsterPosX and monsterPosY coordinates.
-
-  if(monster.currentframe>=monster.totalframes){
-    monster.currentframe = 0
-  }
+function produceMonsterLocationX () {
+  return Math.round(Math.random() * 1300)
+}
+function produceMonsterLocationY () {
+  return Math.round(Math.random() * 500)
+}
+function produceRandomVelocity(){
+  return Math.round(Math.random() * 16)
 }
 
-function produceMonsterLocation (numberOfMonsters) {
-  for(i = 0; i < numberOfMonsters; i++){
-    const monsterPosX = Math.ceil(Math.random() * 1300)
-    const monsterPosY = Math.ceil(Math.random() * 500)
+function makeMonster (){
+  monList.push({
+    position: {
+      x: produceMonsterLocationX(),
+      y: produceMonsterLocationY()
+      },
+      velocity: {
+      x: produceRandomVelocity(),
+      y: produceRandomVelocity()
+      }
+    }
+  )
+}
+
+function drawMonster (item) {
+  // const monsterPosX = Math.ceil(Math.random() * 1300)
+  // const monsterPosY = Math.ceil(Math.random() * 500)
+  context.drawImage(monster.img, monster.currentframe * 32 , 0 , 32 , 32 , item.position.x ,item.position.y , 32 * 2, 32 * 2) // Draws Monster on canvas at monsterPosX and monsterPosY coordinates.
+
+  // if(monster.currentframe>=monster.totalframes){
+  //   monster.currentframe = 0
+//   }
+}
+
+function drawMonsterS(){
+  let item;
+  for (let i = 0; i < monList.length;i++){
+    item = monList[i]
+    drawMonster(item)
   }
-}// Produce Coordinates before drawing monsters.
+}
+// ---------------------------------------------------
+
+// INITIALIZING  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+const canvas = document.getElementById('canvas')
+const context = canvas.getContext("2d")
+let gameStartTrigger = false
+let gameOverTrigger = false
+const gameOver = {img:null, width:500, height:500, currentframe:0, totalframes:1}
+gameOver.img = new Image()
+gameOver.img.src = "assets/game-over.png"
+
+window.onload = function() {
+  setInterval(renderAll,25)
+};
+
+function renderAll (){ // Clears the canvas, then draws everything every 25miliseconds.
+
+  context.clearRect(0,0,canvas.width, canvas.height);
+  drawMonsterS()
+  drawHero()
+  
+  //moveMonster()
+}
+
+makeMonster()
+console.log(monList)
 
 // ---------------------------------------------------
 
-function renderAll (){ // Clears the canvas, then draws everything every 25miliseconds.
-  context.clearRect(0,0,canvas.width, canvas.height);
-  drawMonster() 
-  drawHero()
-  
-}
 
 
 
