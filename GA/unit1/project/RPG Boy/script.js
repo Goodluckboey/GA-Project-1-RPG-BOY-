@@ -6,10 +6,12 @@ let directionChecker = 'right'
 const pk1 = {img:null, width:32, height:32, currentframe:0, totalframes:5}
 pk1.img = new Image()
 pk1.img.src = "assets/char.png"
-let heroHealthBar = document.getElementById("health")
 let Herosize = 2;
+
+let heroHealthBar = document.getElementById("health")
 let heroStats = {
-    health: 100
+    maxHealth: 300,
+    currentHealth: 300
 }
 
 function drawHero () {
@@ -19,13 +21,37 @@ function drawHero () {
   }
 }
 
+function getDamage (){
+  let item = null;
+  for (let i = 0; i < monList.length; i++){ // => For every object in monList
+    item = monList[i];
+    if((heroPosX < item.position.x + 50) && (heroPosX > item.position.x - 50) && (heroPosY < item.position.y + 50) && (heroPosY > item.position.y - 50) && (gameStartTrigger === true)){
+      if(heroStats.currentHealth > 0){
+        heroStats.currentHealth --
+      } else {
+        gameOverTrigger = true
+        pk1.img.src = 'assets/tombstone_sprite.png'
+        pk1.currentframe++;
+      }
+
+  }
+    }
+  // }
+}
+
 window.addEventListener("keydown", function(e) {
   // console.log(`You pressed button ${e.key}.`)
   if(e.key === 'Enter'){
-    const startLogo = document.getElementById('startLogo')
-    startLogo.remove()
-    gameStartTrigger = true
+    const startLogo = document.getElementById('startImage')
+    if (gameStartTrigger === false){
+    startLogo.style.visibility = 'hidden'
+    gameStartTrigger = true}
+    else {
+    gameStartTrigger = false;
+    startLogo.style.visibility = 'visible'
+    }
   }
+
   if ((gameOverTrigger === false) && (gameStartTrigger === true)){
     if(((e.key === 'ArrowUp') || (e.key === 'w'))){ 
         heroPosY-=12
@@ -115,24 +141,7 @@ window.addEventListener("keydown", function(e) {
 }
 );
 
-function getDamage (){
-  let item = null;
-  for (let i = 0; i < monList.length; i++){ // => For every object in monList
-    item = monList[i];
-    if((heroPosX < item.position.x + 50) && (heroPosX > item.position.x - 50) && (heroPosY < item.position.y + 50) && (heroPosY > item.position.y - 50)){
-      if(heroStats.health > 0){
-        heroStats.health --
-        console.log(`Hero has ${heroStats.health} health left!`)
-      } else {
-        gameOverTrigger = true
-        pk1.img.src = 'assets/tombstone_sprite.png'
-        pk1.currentframe++;
-      }
 
-  }
-    }
-  // }
-}
 // ---------------------------------------------------
 
 // MONSTER VARIABLES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -175,7 +184,9 @@ function makeMonster (){ // creates an object with position, velocity and health
 
 function drawMonster (item) { // Actually draws the monster out, using coordinates from makeMonster()
   context.drawImage(monster.img, monster.currentframe * 32 , 0 , 32 , 32 , item.position.x ,item.position.y , 32 * 2, 32 * 2) // Draws Monster on canvas at monsterPosX and monsterPosY coordinates.
-
+  if(monster.currentframe>=monster.totalframes){
+    monster.currentframe = 0
+  }
 }
 
 function drawMonsterS(){ // Draws all the monsters out, according to the number of objects in monList.
@@ -192,13 +203,13 @@ function moveMonster(){
     item = monList[i];
     item.position.x += item.velocity.x;
       if (item.position.x > 1464){
-        item.position.x = 0;
-      } else if (item.position.x < 0){
+        item.position.x = -32;
+      } else if (item.position.x < -32){
         item.position.x = 1464
       }
       if (item.position.y > 824){
-        item.position.y = 0;
-      } else if (item.position.x < 0){
+        item.position.y = -32;
+      } else if (item.position.x < -32){
         item.position.y = 824
       }
     item.position.y += item.velocity.y
@@ -208,7 +219,7 @@ function moveMonster(){
 
 // INITIALIZING  >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 const ANIMATION_INTERVAL = 25
-const NUMBER_OF_MONSTERS = 12
+const NUMBER_OF_MONSTERS = 20
 const canvas = document.getElementById('canvas')
 const context = canvas.getContext("2d")
 let gameStartTrigger = false
@@ -232,12 +243,13 @@ window.onload = function() {
 function renderAll (){ // Clears the canvas, then draws everything every 25miliseconds.
 if(gameStartTrigger === true)
 { context.clearRect(0,0,canvas.width, canvas.height);
-  
+  heroHealthBar.value = heroStats.currentHealth
+  heroHealthBar.max = heroStats.maxHealth
   drawMonsterS()
   drawHero()
   moveMonster()
   gameOverState()
-
+  monster.currentframe++;
   }
 }
 

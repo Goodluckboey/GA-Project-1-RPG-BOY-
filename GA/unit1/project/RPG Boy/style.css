@@ -8,11 +8,10 @@ body {
 }
 
 #health {
-    position:absolute;
-    top: -5px;
-    left: -15px;
-    height:24px;
-    width:5%;
+    position:relative;
+    height:48px;
+    top: 50px;
+    width:50%;
 }
 
 #body-words{
