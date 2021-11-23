@@ -152,7 +152,7 @@ window.addEventListener("keydown", function(e) {
 // ---------------------------------------------------
 
 // MONSTER VARIABLES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-const NUMBER_OF_MONSTERS = 1
+const NUMBER_OF_MONSTERS = 4
 const monsterTimer = null;
 const monster = {img:null, width:32, height:32, currentframe:0, totalframes:5}
 monster.img = new Image()
@@ -225,7 +225,7 @@ function moveMonster(){
         item.position.y = 780
       }
     
-    // console.log(`${item.position.x}, ${item.position.y}`)
+    console.log(`${item.position.x}, ${item.position.y}`)
    }
   }
 }
@@ -248,19 +248,10 @@ let gameOverTrigger = false
 const gameOver = {img:null, width:500, height:500, currentframe:0, totalframes:1}
 gameOver.img = new Image()
 gameOver.img.src = "assets/game-over.png"
-const gameWin = {img:null, width:500, height:500, currentframe:0, totalframes:1}
-gameWin.img = new Image()
-gameWin.img.src = "assets/you-win.png"
 
 function gameOverState (){
   if(gameOverTrigger === true){
     context.drawImage(gameOver.img, 5 , 10 , 600 , 500 , 600 , 250 , 350, 300)
-  }
-}
-
-function gameWon (){
-  if(graveStoneList.length === NUMBER_OF_MONSTERS){
-    context.drawImage(gameWin.img, 5 , 10 , 1411 , 501 , 450 , 250 , 600, 400)
   }
 }
 
@@ -281,7 +272,6 @@ if(gameStartTrigger === true)
   gameOverState()
   monster.currentframe++;
   deadMonster()
-  gameWon ()
   }
 }
 
