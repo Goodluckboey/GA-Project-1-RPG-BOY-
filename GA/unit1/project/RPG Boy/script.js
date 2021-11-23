@@ -120,8 +120,16 @@ function getDamage (){
   for (let i = 0; i < monList.length; i++){ // => For every object in monList
     item = monList[i];
     if((heroPosX < item.position.x + 50) && (heroPosX > item.position.x - 50) && (heroPosY < item.position.y + 50) && (heroPosY > item.position.y - 50)){
+      if(heroStats.health > 0){
+        heroStats.health --
+        console.log(`Hero has ${heroStats.health} health left!`)
+      } else {
+        gameOverTrigger = true
+        pk1.img.src = 'assets/tombstone_sprite.png'
+        pk1.currentframe++;
+      }
 
-    console.log('You got hit!')}
+  }
     }
   // }
 }
@@ -209,6 +217,12 @@ const gameOver = {img:null, width:500, height:500, currentframe:0, totalframes:1
 gameOver.img = new Image()
 gameOver.img.src = "assets/game-over.png"
 
+function gameOverState (){
+  if(gameOverTrigger === true){
+    context.drawImage(gameOver.img, 5 , 10 , 600 , 500 , 600 , 250 , 350, 300)
+  }
+}
+
 window.onload = function() {
   setInterval(renderAll,ANIMATION_INTERVAL)
   setInterval(getDamage,ANIMATION_INTERVAL)
@@ -222,6 +236,7 @@ if(gameStartTrigger === true)
   drawMonsterS()
   drawHero()
   moveMonster()
+  gameOverState()
 
   }
 }
