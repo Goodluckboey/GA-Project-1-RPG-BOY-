@@ -1,8 +1,6 @@
 body {
     margin: auto;
     max-width: 1464px;
-    /* background-image: url(assets\sky.png); */
-    background-repeat: no-repeat;
     background-size: 100% 100%;
     position: relative;
 }
@@ -34,7 +32,7 @@ progress#health {
   
   progress::-webkit-progress-value {
     border-radius: 50px;
-    background: crimson;
+    background: #e48c8c;
   }
   
   progress::-webkit-progress-bar {
@@ -55,6 +53,12 @@ progress#health {
     border: 3px solid #73AD21;
     width: 1464px;
     height: 824px;
+}
+
+#siteBG {
+    position: absolute;
+    background-image: url(assets\sky.png);
+    background-size: cover;
 }
 
 #canvas {

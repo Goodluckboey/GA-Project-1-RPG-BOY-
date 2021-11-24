@@ -139,7 +139,7 @@ window.addEventListener("keydown", function(e) {
             // console.log(`This monster has ${monster.health} hp left!`)
           }else {
             monster.status = 'dead'
-            heroStats.currentHealth += 10
+            heroStats.currentHealth += 5
             graveStoneList.push([monster.position.x,monster.position.y])
             monster.position.x = 9999
             monster.position.y = 9999
@@ -269,7 +269,7 @@ if(gameStartTrigger === true)
   monster.currentframe++;
   deadMonster()
   gameWon ()
-  document.getElementById('heart').style.left  = ((1440 * heroHealthBar.value) / 100)+"px";
+  document.getElementById('heart').style.left  = (((1355 * heroHealthBar.value) / 100) + 70)+"px";
   }
 }
 makeMonster()
