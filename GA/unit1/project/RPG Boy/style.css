@@ -7,14 +7,40 @@ body {
     position: relative;
 }
 
+#heart {
+    position:absolute;
+    height:65px;
+    bottom: 50px;
+    left: 1425px; 
+    /* 1335 value for the entire bar */
+}
+
 progress {
     position:relative;
-    height:48px;
-    bottom: 55px;
+    height:38px;
+    bottom: 50px;
     left: 100px;
     width:93.5%;
-    color: red;
 }
+
+progress#health {
+    background: black;
+    border-radius: 50px;
+  }
+  
+  /* progress::-moz-progress-bar {
+    background: lightcolor;
+  } */
+  
+  progress::-webkit-progress-value {
+    border-radius: 50px;
+    background: crimson;
+  }
+  
+  progress::-webkit-progress-bar {
+    border-radius: 50px;
+    background: grey;
+  }
 
 #body-words{
     max-width: 200px;

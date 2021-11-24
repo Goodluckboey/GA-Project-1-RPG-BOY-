@@ -1,25 +1,22 @@
-// All variables to be reset after GameOver or Replay >>>>>>>>>>>>>>>>>>>>>
-let heroPosX = 0 //limit = 688
-let heroPosY = 0 //limit = 344
-let directionChecker = 'right'
-const NUMBER_OF_MONSTERS = 20
-let heroRange = 65
-let heroStats = {
-  maxHealth: 100,
-  currentHealth: 100
-}
+// All variables to be reset >>>>>>>>>>>>>>>>>>>>>
 
-let monList = [];
-let graveStoneList = []
 
 // HERO VARIABLES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 const pk1Timer = null;
-
+let heroPosX = 0 //limit = 688
+let heroPosY = 0 //limit = 344
+let directionChecker = 'right'
 const pk1 = {img:null, width:32, height:32, currentframe:0, totalframes:5}
 pk1.img = new Image()
 pk1.img.src = "assets/char.png"
 let Herosize = 2;
+let heroRange = 65
 let heroHealthBar = document.getElementById("health")
+let heroStats = {
+    maxHealth: 100,
+    currentHealth: 100
+}
+
 function drawHero () {
   context.drawImage(pk1.img, pk1.currentframe * 32 , 0 , 32 , 32 , heroPosX ,heroPosY , 32 * Herosize, 32 * Herosize) // Draws Hero on canvas at heroPosX and heroPosY coordinates.
   if(pk1.currentframe>=pk1.totalframes){
@@ -139,7 +136,6 @@ window.addEventListener("keydown", function(e) {
             // console.log(`This monster has ${monster.health} hp left!`)
           }else {
             monster.status = 'dead'
-            heroStats.currentHealth += 10
             graveStoneList.push([monster.position.x,monster.position.y])
             monster.position.x = 9999
             monster.position.y = 9999
@@ -159,14 +155,16 @@ window.addEventListener("keydown", function(e) {
 // ---------------------------------------------------
 
 // MONSTER VARIABLES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+const NUMBER_OF_MONSTERS = 20
 const monsterTimer = null;
 const monster = {img:null, width:32, height:32, currentframe:0, totalframes:5}
 monster.img = new Image()
 monster.img.src = "assets/enemy_walk.png"
 const graveStoneObj = {img:null, width:32, height:32, currentframe:0, totalframes:5}
 graveStoneObj.img = new Image()
-graveStoneObj.img.src = "assets/skulls.png"
-
+graveStoneObj.img.src = "assets/tombstone_sprite.png"
+let monList = [];
+let graveStoneList = []
 
 function produceMonsterLocationX () {
   return Math.round(Math.random() * 1300)
@@ -195,7 +193,7 @@ function makeMonster (){ // creates an object with position, velocity and health
       status: 'alive'
     }
   )}
-} // Number of objects created is limited to variable NUMBER_OF_MONSTERS.
+} // Number of objects created is limited to variable NUMBER_OF_MONSTERS in initialization.
 
 function drawMonster (item) { // Actually draws the monster out, using coordinates from makeMonster()
   context.drawImage(monster.img, monster.currentframe * 32 , 0 , 32 , 32 , item.position.x ,item.position.y , 32 * 2, 32 * 2) // Draws Monster on canvas at monsterPosX and monsterPosY coordinates.
@@ -216,7 +214,7 @@ function moveMonster(){
   let item;
   for (let i =0; i < monList.length; i++){ // => For every object in monList
     item = monList[i];
-    if(item.status === 'alive') // To make the monsters reappear once they go off screen.
+    if(item.status === 'alive')
       {item.position.x += item.velocity.x;
       if (item.position.x > 1400){
         item.position.x = -16;
@@ -269,11 +267,9 @@ if(gameStartTrigger === true)
   monster.currentframe++;
   deadMonster()
   gameWon ()
-  document.getElementById('heart').style.left  = ((1440 * heroHealthBar.value) / 100)+"px";
   }
 }
 makeMonster()
-
 // ---------------------------------------------------
 
 // >>>> GAME STATES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
