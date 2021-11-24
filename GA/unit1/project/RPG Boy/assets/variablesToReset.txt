@@ -1,0 +1,11 @@
+hero position
+hero health
+monsterhealth
+monsterstatus
+monsterpositions
+gameStartTrigger
+gameOverTrigger
+
+clear:
+
+graveStoneList

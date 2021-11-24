@@ -129,7 +129,7 @@ window.addEventListener("keydown", function(e) {
         monster = monList[i];
         if((heroPosX < monster.position.x + heroRange) && (heroPosX > monster.position.x - heroRange) && (heroPosY < monster.position.y + heroRange) && (heroPosY > monster.position.y - heroRange) && (gameStartTrigger === true)){
           if(monster.health > 0){
-            monster.health -=5
+            monster.health -=1
             // console.log(`This monster has ${monster.health} hp left!`)
           }else {
             monster.status = 'dead'
@@ -245,24 +245,6 @@ const canvas = document.getElementById('canvas')
 const context = canvas.getContext("2d")
 let gameStartTrigger = false
 let gameOverTrigger = false
-const gameOver = {img:null, width:500, height:500, currentframe:0, totalframes:1}
-gameOver.img = new Image()
-gameOver.img.src = "assets/game-over.png"
-const gameWin = {img:null, width:500, height:500, currentframe:0, totalframes:1}
-gameWin.img = new Image()
-gameWin.img.src = "assets/you-win.png"
-
-function gameOverState (){
-  if(gameOverTrigger === true){
-    context.drawImage(gameOver.img, 5 , 10 , 600 , 500 , 600 , 250 , 350, 300)
-  }
-}
-
-function gameWon (){
-  if(graveStoneList.length === NUMBER_OF_MONSTERS){
-    context.drawImage(gameWin.img, 5 , 10 , 1411 , 501 , 450 , 250 , 600, 400)
-  }
-}
 
 window.onload = function() {
   setInterval(renderAll,ANIMATION_INTERVAL)
@@ -284,13 +266,32 @@ if(gameStartTrigger === true)
   gameWon ()
   }
 }
-
 makeMonster()
+// ---------------------------------------------------
 
+// >>>> GAME STATES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+const gameOver = {img:null, width:500, height:500, currentframe:0, totalframes:1}
+gameOver.img = new Image()
+gameOver.img.src = "assets/game-over.png"
+const gameWin = {img:null, width:500, height:500, currentframe:0, totalframes:1}
+gameWin.img = new Image()
+gameWin.img.src = "assets/you-win.png"
+
+function gameOverState (){
+  if(gameOverTrigger === true){
+    context.drawImage(gameOver.img, 5 , 10 , 600 , 500 , 600 , 250 , 350, 300)
+  }
+}
+
+function gameWon (){
+  if(graveStoneList.length === NUMBER_OF_MONSTERS){
+    context.drawImage(gameWin.img, 5 , 10 , 1411 , 501 , 450 , 250 , 600, 400)
+  }
+}
 
 // ---------------------------------------------------
 
-// Questions to ask: How to refresh the page without refreshing the page physically(javascript)?, how to change the color of the progress bar?
+// Questions to ask: How to refresh the page without refreshing the page physically(javascript)? aka reset all variables in one go, how to change the color of the progress bar?
 
 
 
