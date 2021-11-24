@@ -2,7 +2,7 @@
 let heroPosX = 0 //limit = 688
 let heroPosY = 0 //limit = 344
 let directionChecker = 'right'
-const NUMBER_OF_MONSTERS = 20
+const NUMBER_OF_MONSTERS = 2
 let heroRange = 65
 let heroStats = {
   maxHealth: 100,
@@ -254,7 +254,7 @@ let gameOverTrigger = false
 window.onload = function() {
   setInterval(renderAll,ANIMATION_INTERVAL)
   setInterval(getDamage,ANIMATION_INTERVAL)
-  setInterval(testInterval,1000)
+  setInterval(secTimer30,1000)
 };
 
 function renderAll (){ // Clears the canvas, then draws everything every 25miliseconds.
@@ -262,6 +262,7 @@ if(gameStartTrigger === true)
 { context.clearRect(0,0,canvas.width, canvas.height);
   heroHealthBar.value = heroStats.currentHealth
   heroHealthBar.max = heroStats.maxHealth
+  document.getElementById('timer').value = timer
   drawMonsterS()
   drawHero()
   moveMonster()
@@ -274,16 +275,20 @@ if(gameStartTrigger === true)
 }
 makeMonster()
 
-function testInterval (){
-  if(gameStartTrigger === true)
-  {console.log(timer)
-  timer++}
+function secTimer30 (){
+  if(gameStartTrigger === true){
+    timer--
+    if(timer === -1){
+      gameOverTrigger = true
+    }
+  }
 }
 
 // ---------------------------------------------------
 
 // >>>> GAME STATES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-let timer = 0
+let timer = 30
+document.getElementById('timer').value = timer
 const gameOver = {img:null, width:500, height:500, currentframe:0, totalframes:1}
 gameOver.img = new Image()
 gameOver.img.src = "assets/game-over.png"
@@ -294,13 +299,16 @@ gameWin.img.src = "assets/you-win.png"
 function gameOverState (){
   if(gameOverTrigger === true){
     context.drawImage(gameOver.img, 5 , 10 , 600 , 500 , 600 , 250 , 350, 300)
+    gameStartTrigger = false;
   }
 }
 
 function gameWon (){
   if(graveStoneList.length === NUMBER_OF_MONSTERS){
     context.drawImage(gameWin.img, 5 , 10 , 1411 , 501 , 450 , 250 , 600, 400)
+    gameStartTrigger = false;
   }
+  
 }
 
 // ---------------------------------------------------

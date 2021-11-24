@@ -3,6 +3,15 @@ body {
     max-width: 1464px;
     background-size: 100% 100%;
     position: relative;
+    
+}
+
+#siteBG {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    top: 0px;
+
 }
 
 #heart {
@@ -40,6 +49,31 @@ progress#health {
     background: grey;
   }
 
+#timer {
+    position: absolute;
+    bottom: -50px;
+    height: 80px;
+}
+
+progress#timer {
+    background: black;
+    border-radius: 50px;
+  }
+  
+  /* progress::-moz-progress-bar {
+    background: lightcolor;
+  } */
+  
+  progress#timer::-webkit-progress-value {
+    border-radius: 20px;
+    background: #569bbb;
+  }
+  
+  progress#timer::-webkit-progress-bar {
+    border-radius: 50px;
+    background: rgba(121, 15, 15, 0.185);
+  }
+
 #body-words{
     max-width: 200px;
     padding: 10px;
@@ -53,12 +87,6 @@ progress#health {
     border: 3px solid #73AD21;
     width: 1464px;
     height: 824px;
-}
-
-#siteBG {
-    position: absolute;
-    background-image: url(assets\sky.png);
-    background-size: cover;
 }
 
 #canvas {
@@ -81,7 +109,3 @@ progress#health {
     top: 3px;
     left: 2px;
 }
-
-/* #startImage {
-    max-width: 1000px;
-} */
