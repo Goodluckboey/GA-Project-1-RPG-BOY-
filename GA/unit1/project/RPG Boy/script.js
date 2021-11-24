@@ -14,7 +14,6 @@ let graveStoneList = []
 let gameStartTrigger = false
 let gameOverTrigger = false
 let playerScore = 0
-let highScore = 0
 let timer = 30
 // HERO VARIABLES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 const pk1Timer = null;
@@ -279,9 +278,14 @@ if(gameStartTrigger === true)
   gameWon ()
   document.getElementById('heart').style.left  = (((1355 * heroHealthBar.value) / 100) + 70)+"px";
   displayScore.innerText = `Your Score: ${playerScore}`
+  displayHiScore.innerText = `High Score: ${highScore}`
   if(playerScore > highScore){
-    displayHiScore.innerText = `High Score: ${playerScore}`
+    localStorage.setItem("HighScore", playerScore);
   }
+  // if(highScore === null){
+  //   highScore = 'No Players Yet!'
+  // }
+  displayHiScore.innerText = `High Score: ${highScore}`
   }
 }
 makeMonster()
@@ -298,7 +302,10 @@ function secTimer30 (){
 // ---------------------------------------------------
 
 // >>>> GAME STATES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-
+let highScore = localStorage.getItem("HighScore")
+//  else {
+//   highScore = localStorage.getItem("HighScore")
+// }
 document.getElementById('timer').value = timer
 const gameOver = {img:null, width:500, height:500, currentframe:0, totalframes:1}
 gameOver.img = new Image()
