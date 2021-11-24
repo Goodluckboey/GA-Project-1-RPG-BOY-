@@ -254,7 +254,7 @@ let gameOverTrigger = false
 window.onload = function() {
   setInterval(renderAll,ANIMATION_INTERVAL)
   setInterval(getDamage,ANIMATION_INTERVAL)
-  
+  setInterval(testInterval,1000)
 };
 
 function renderAll (){ // Clears the canvas, then draws everything every 25miliseconds.
@@ -274,9 +274,16 @@ if(gameStartTrigger === true)
 }
 makeMonster()
 
+function testInterval (){
+  if(gameStartTrigger === true)
+  {console.log(timer)
+  timer++}
+}
+
 // ---------------------------------------------------
 
 // >>>> GAME STATES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+let timer = 0
 const gameOver = {img:null, width:500, height:500, currentframe:0, totalframes:1}
 gameOver.img = new Image()
 gameOver.img.src = "assets/game-over.png"
