@@ -6,6 +6,16 @@ body {
     
 }
 
+#your-score {
+    font-size: 50px;
+    padding: 10px;
+}
+
+#highscore {
+    padding: 10px;
+    font-size: 40px;
+}
+
 #siteBG {
     position: absolute;
     width: 100vw;
@@ -17,7 +27,7 @@ body {
 #heart {
     position:absolute;
     height:65px;
-    bottom: 50px;
+    bottom: 190px;
     left: 1425px; 
     /* 1335 value for the entire bar */
 }
@@ -39,25 +49,28 @@ progress#health {
     background: lightcolor;
   } */
   
-  progress::-webkit-progress-value {
+  progress#health::-webkit-progress-value {
     border-radius: 50px;
     background: #e48c8c;
   }
   
-  progress::-webkit-progress-bar {
+  progress#health::-webkit-progress-bar {
     border-radius: 50px;
     background: grey;
   }
 
 #timer {
     position: absolute;
-    bottom: -50px;
-    height: 80px;
+    top: 390px;
+    left: 1080px;
+    height: 50px;
+    width: 820px;
+    transform: rotate(270deg);
 }
 
 progress#timer {
     background: black;
-    border-radius: 50px;
+    /* border-radius: 50px; */
   }
   
   /* progress::-moz-progress-bar {
@@ -65,12 +78,12 @@ progress#timer {
   } */
   
   progress#timer::-webkit-progress-value {
-    border-radius: 20px;
+    /* border-radius: 20px; */
     background: #569bbb;
   }
   
   progress#timer::-webkit-progress-bar {
-    border-radius: 50px;
+    /* border-radius: 50px; */
     background: rgba(121, 15, 15, 0.185);
   }
 

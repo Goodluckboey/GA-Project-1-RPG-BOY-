@@ -2,7 +2,7 @@
 let heroPosX = 0 //limit = 688
 let heroPosY = 0 //limit = 344
 let directionChecker = 'right'
-const NUMBER_OF_MONSTERS = 2
+const NUMBER_OF_MONSTERS = 20
 let heroRange = 65
 let heroStats = {
   maxHealth: 100,
@@ -11,7 +11,11 @@ let heroStats = {
 
 let monList = [];
 let graveStoneList = []
-
+let gameStartTrigger = false
+let gameOverTrigger = false
+let playerScore = 0
+let highScore = 0
+let timer = 30
 // HERO VARIABLES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 const pk1Timer = null;
 
@@ -45,6 +49,8 @@ function getDamage (){
     }
   // }
 }
+
+
 
 window.addEventListener("keydown", function(e) {
   // console.log(`You pressed button ${e.key}.`)
@@ -139,6 +145,7 @@ window.addEventListener("keydown", function(e) {
             // console.log(`This monster has ${monster.health} hp left!`)
           }else {
             monster.status = 'dead'
+            playerScore += 1
             heroStats.currentHealth += 5
             graveStoneList.push([monster.position.x,monster.position.y])
             monster.position.x = 9999
@@ -162,7 +169,7 @@ window.addEventListener("keydown", function(e) {
 const monsterTimer = null;
 const monster = {img:null, width:32, height:32, currentframe:0, totalframes:5}
 monster.img = new Image()
-monster.img.src = "assets/enemy_walk.png"
+monster.img.src = "assets/enemy_walk_jellyfish.png"
 const graveStoneObj = {img:null, width:32, height:32, currentframe:0, totalframes:5}
 graveStoneObj.img = new Image()
 graveStoneObj.img.src = "assets/skulls.png"
@@ -248,8 +255,8 @@ function deadMonster(){
 const ANIMATION_INTERVAL = 25
 const canvas = document.getElementById('canvas')
 const context = canvas.getContext("2d")
-let gameStartTrigger = false
-let gameOverTrigger = false
+let displayScore = document.getElementById('your-score')
+let displayHiScore = document.getElementById('highscore')
 
 window.onload = function() {
   setInterval(renderAll,ANIMATION_INTERVAL)
@@ -271,6 +278,10 @@ if(gameStartTrigger === true)
   deadMonster()
   gameWon ()
   document.getElementById('heart').style.left  = (((1355 * heroHealthBar.value) / 100) + 70)+"px";
+  displayScore.innerText = `Your Score: ${playerScore}`
+  if(playerScore > highScore){
+    displayHiScore.innerText = `High Score: ${playerScore}`
+  }
   }
 }
 makeMonster()
@@ -287,7 +298,7 @@ function secTimer30 (){
 // ---------------------------------------------------
 
 // >>>> GAME STATES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-let timer = 30
+
 document.getElementById('timer').value = timer
 const gameOver = {img:null, width:500, height:500, currentframe:0, totalframes:1}
 gameOver.img = new Image()
