@@ -21,6 +21,13 @@ body {
     padding: 20px;
 }
 
+#level {
+  position: relative;
+  font-size: 30px;
+  padding: 20px;
+  font-family: 'Press Start 2P';
+}
+
 #highscore {
     padding: 20px;
     font-size: 30px;
@@ -41,7 +48,7 @@ body {
 #heart {
     position:absolute;
     height:65px;
-    bottom: 190px;
+    bottom: 310px;
     left: 1425px; 
     /* 1355 value for the entire bar */
 }

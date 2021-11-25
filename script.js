@@ -2,13 +2,16 @@
 let heroPosX = 0 //limit = 688
 let heroPosY = 0 //limit = 344
 let directionChecker = 'right'
+let floorLevel = 1
 let NUMBER_OF_MONSTERS = 3
 let heroRange = 65
 let heroStats = {
   maxHealth: 100,
   currentHealth: 100
 }
-
+let heroAccel = 12
+let monsterRange = (heroRange - 25)
+let monsterSize = 2
 let monList = [];
 let graveStoneList = []
 let gameStartTrigger = false
@@ -35,10 +38,10 @@ function getDamage (){
   let touchedMonster = null;
   for (let i = 0; i < monList.length; i++){ // => For every object in monList
     touchedMonster = monList[i];
-    if((heroPosX < touchedMonster.position.x + 40) && (heroPosX > touchedMonster.position.x - 40) && (heroPosY < touchedMonster.position.y + 40) && (heroPosY > touchedMonster.position.y - 40) && (gameStartTrigger === true)){
+    if((heroPosX < touchedMonster.position.x + monsterRange) && (heroPosX > touchedMonster.position.x - monsterRange) && (heroPosY < touchedMonster.position.y + monsterRange) && (heroPosY > touchedMonster.position.y - monsterRange) && (gameStartTrigger === true)){
       if(touchedMonster.status === 'alive'){
         if(heroStats.currentHealth > 0){
-        heroStats.currentHealth --
+        heroStats.currentHealth -= monsterDamage
       } else {
         gameOverTrigger = true
         pk1.img.src = 'assets/tombstone_sprite.png'
@@ -81,7 +84,7 @@ window.addEventListener("keydown", function(e) {
 
   if ((gameOverTrigger === false) && (gameStartTrigger === true)){
     if(((e.key === 'ArrowUp') || (e.key === 'w'))){ 
-        heroPosY-=12
+        heroPosY-=heroAccel
         if(heroPosY < -48){
           heroPosY = 824
         }
@@ -96,7 +99,7 @@ window.addEventListener("keydown", function(e) {
         } 
     }
     if (((e.key === 'ArrowDown') || (e.key === 's'))){
-        heroPosY+=12
+        heroPosY+=heroAccel
         if(heroPosY > 824){
           heroPosY = -48
         }
@@ -113,7 +116,7 @@ window.addEventListener("keydown", function(e) {
     }
     if(((e.key === 'ArrowLeft') || (e.key === 'a'))){
         // myAudio.play();
-        heroPosX-=12
+        heroPosX-=heroAccel
         if(heroPosX < -48){
           heroPosX = 1464
         }
@@ -125,7 +128,7 @@ window.addEventListener("keydown", function(e) {
         }
     }
     if (((e.key === 'ArrowRight') || (e.key === 'd'))){
-        heroPosX+=12
+        heroPosX+=heroAccel
         if(heroPosX > 1464){
           heroPosX = -48
         }
@@ -178,13 +181,15 @@ window.addEventListener("keydown", function(e) {
 // ---------------------------------------------------
 
 // MONSTER VARIABLES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
 const monsterTimer = null;
 const monster = {img:null, width:32, height:32, currentframe:0, totalframes:5}
 monster.img = new Image()
-monster.img.src = "assets/enemy_walk_jellyfish.png"
+monster.img.src = "assets/enemy_walk_level1.png"
 const graveStoneObj = {img:null, width:32, height:32, currentframe:0, totalframes:5}
 graveStoneObj.img = new Image()
 graveStoneObj.img.src = "assets/skulls.png"
+let monsterDamage = 1
 
 
 function produceMonsterLocationX () {
@@ -217,7 +222,7 @@ function makeMonster (){ // creates an object with position, velocity and health
 } // Number of objects created is limited to variable NUMBER_OF_MONSTERS.
 
 function drawMonster (item) { // Actually draws the monster out, using coordinates from makeMonster()
-  context.drawImage(monster.img, monster.currentframe * 32 , 0 , 32 , 32 , item.position.x ,item.position.y , 32 * 2, 32 * 2) // Draws Monster on canvas at monsterPosX and monsterPosY coordinates.
+  context.drawImage(monster.img, monster.currentframe * 32 , 0 , 32 , 32 , item.position.x ,item.position.y , 32 * monsterSize, 32 * monsterSize) // Draws Monster on canvas at monsterPosX and monsterPosY coordinates.
   if(monster.currentframe>=monster.totalframes){
     monster.currentframe = 0
   }
@@ -257,7 +262,7 @@ function deadMonster(){
   let graveStone;
   for (let i = 0; i < graveStoneList.length; i++){
     graveStone = graveStoneList[i]
-    context.drawImage(graveStoneObj.img, graveStoneObj.currentframe * 32 , 0 , 32 , 32 , graveStone[0] ,graveStone[1] , 32 * 2, 32 * 2)
+    context.drawImage(graveStoneObj.img, graveStoneObj.currentframe * 32 , 0 , 32 , 32 , graveStone[0] ,graveStone[1] , 32 * monsterSize, 32 * monsterSize)
    }
   }
 
@@ -275,10 +280,12 @@ const monsterAudio = new Audio('assets/monsterDead-one.mp3')
 const punchAudio = new Audio('assets/punch-fast.mp3')
 const gameOverAudio = new Audio('assets/losingSound.mp3')
 const winAudio = new Audio('assets/winAudio.mp3')
+const grabLevel = document.getElementById('level')
 
 window.onload = function() {
   displayScore.innerText = `Your Score: ${playerScore}`
   displayHiScore.innerHTML = `High Score: ${highScore}`
+  grabLevel.innerText = `Level: ${floorLevel}`
   setInterval(renderAll,ANIMATION_INTERVAL)
   setInterval(getDamage,ANIMATION_INTERVAL)
   setInterval(secTimer30,1000)
@@ -312,6 +319,7 @@ if(gameStartTrigger === true){
   //   highScore = 'No Players Yet!'
   // }
   displayHiScore.innerText = `High Score: ${getRealHS()}`
+  grabLevel.innerText = `Level: ${floorLevel}`
   }
 }
 makeMonster()
@@ -381,16 +389,20 @@ directionChecker = 'right'
 NUMBER_OF_MONSTERS = 3
 Herosize = 2
 heroRange = 65
+monsterSize = 2
+monsterDamage = 1
+heroAccel = 12
 heroStats = {
   maxHealth: 100,
   currentHealth: 100
 }
-
+floorLevel = 1
 monList = [];
 graveStoneList = []
 gameStartTrigger = false
 gameOverTrigger = false
 gameWinTrigger = false
+monster.img.src = "assets/enemy_walk_level1.png"
 playerScore = 0
 timer = 30
 pk1.img.src = "assets/char.png"
@@ -412,6 +424,9 @@ function nextLevel(){
   NUMBER_OF_MONSTERS += 4
   heroRange += 10
   Herosize += 0.5
+  heroAccel+= 4
+  monsterDamage+= 0.5
+  floorLevel += 1
   heroStats = {
     maxHealth: 100,
     currentHealth: 100
@@ -423,6 +438,7 @@ function nextLevel(){
   gameOverTrigger = false
   gameWinTrigger = false
   timer = 30
+  monsterSize += 0.33
   pk1.img.src = "assets/char.png"
   console.log('Next Level!')
   makeMonster()
@@ -430,8 +446,18 @@ function nextLevel(){
   if(playerScore > highScore){
     localStorage.setItem("HighScore", playerScore);
   }
-  
+  determineMonster()
   }
+
+function determineMonster() {
+  if(floorLevel === 2){
+    monster.img.src = "assets/enemy_walk_level2.png"
+  } else if(floorLevel === 3){
+    monster.img.src = "assets/enemy_walk_level3.png"
+  } else if(floorLevel === 4){
+    monster.img.src = "assets/enemy_walk_level4.png"
+  }
+}
 // ---------------------------------------------------
 
 /* Interesting Code Points
