@@ -16,7 +16,7 @@
 
 ### Technologies used
 #### Canvas
-  - Canvas was used to facillitate free-movement and fast framework, which the final product of the game was intended to require.
+  - Canvas was used to facillitate free-movement and fast FPS, which was part of the initial thought design.
   - As it was something that class did not touch on, I wanted to challenge myself and learn something completely new. It was difficult and definitely still is, but after             spending a week on this project, I've grown more comfortable with it, and can manipulate it far better than i could before.
 
 ### Problems faced
