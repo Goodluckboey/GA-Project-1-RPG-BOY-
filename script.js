@@ -2,7 +2,7 @@
 let heroPosX = 0 //limit = 688
 let heroPosY = 0 //limit = 344
 let directionChecker = 'right'
-let NUMBER_OF_MONSTERS = 24
+let NUMBER_OF_MONSTERS = 23
 let heroRange = 65
 let heroStats = {
   maxHealth: 100,
