@@ -23,11 +23,11 @@
 1. The first problem I encountered was with the spawning of the monsters. Admittedly, I was still very unsure how to use canvas at the start of the week. It worked differently        from HTML elements and required plenty of Google-fu to make sense of anything. 
 
    - #### Randomizing of monster locations & Movements
-    - I had initially hardcoded a single monster and the hero to be able to interact with each other. The problem, though, was that it didn't translate well dynamically. When i       tried to do the same thing ; attaching the function to my renderer function (renderAll), all I got was a bunch of monsters reappearing every 25 milliseconds at random         locations.
+    - I had initially hardcoded a single monster and the hero to be able to interact with each other. The problem, though, was that it didn't translate well dynamically. When i       tried to do the same thing ; attaching the function to my renderer function (renderAll), all I got was a bunch of monsters reappearing every 25 milliseconds at random           locations.
     - As to making them move, I faced a problem in making them bounce back. The intent was to have their coordinates turn negative once they reached the threshold of the canvas.
       This was problematic, and in a bid to reach the MVP ASAP before Tuesday, I settled for having them reappear at the opposite ends of the screen.
       
-      Much of the code structure was deduced after studying the codepen below. The author had movements that I sorely wanted, but I still needed to add personal changes, so I         had to deconstruct the code bit by bit and see which parts worked, and which segments did what.
+      Much of the code structure was deduced after studying the codepen below. The developer had movements that I sorely wanted, but I still needed to add personal changes, so I       had to deconstruct the code bit by bit and see which parts worked, and which segments did what.
       
       [https://codepen.io/jareilly/pen/mepMKN?editors=0010](url)
       
