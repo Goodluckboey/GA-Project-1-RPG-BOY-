@@ -155,12 +155,7 @@ window.addEventListener("keydown", function(e) {
     }
   }
 }
-
-// console.log(`You pressed button ${e.key}.`)
-
-
 );
-
 
 // ---------------------------------------------------
 
@@ -270,11 +265,11 @@ if(gameStartTrigger === true)
   heroHealthBar.max = heroStats.maxHealth
   document.getElementById('timer').value = timer
   drawMonsterS()
-  drawHero()
   moveMonster()
-  gameOverState()
   monster.currentframe++;
   deadMonster()
+  drawHero()
+  gameOverState()
   gameWon ()
   document.getElementById('heart').style.left  = (((1355 * heroHealthBar.value) / 100) + 70)+"px";
   displayScore.innerText = `Your Score: ${playerScore}`
@@ -303,9 +298,6 @@ function secTimer30 (){
 
 // >>>> GAME STATES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 let highScore = localStorage.getItem("HighScore")
-//  else {
-//   highScore = localStorage.getItem("HighScore")
-// }
 document.getElementById('timer').value = timer
 const gameOver = {img:null, width:500, height:500, currentframe:0, totalframes:1}
 gameOver.img = new Image()
@@ -330,57 +322,3 @@ function gameWon (){
 }
 
 // ---------------------------------------------------
-
-// Questions to ask: How to refresh the page without refreshing the page physically(javascript)? aka reset all variables in one go, how to change the color of the progress bar?
-
-
-
-
-
-/* Moving the monsters: 
-Function that chooses between +10 & -10. Then adds it to X or Y.
-
-create a div that floats around the screen.
-Where the div floats, a monster is formed as well.
-
-
-*/
-
-
-
-/* 
-const things = []
-
-function makeThings(){
-  creates a square, with a random position, and a random velocity
-}//this function is called outside of the renderAll
-
-function drawThing(item){
-define how this item will look.
-define "item"'s parameters
-e.g context.fillRect(item.position.x, item.position.y, item.width, item.height);
-}
-
-function drawThings() {
-const item
-for(let i = 0; i < things.length; i++) {
-    item = things[i];
-    drawThing(item);
-  }
-}
-
-function moveThings() {
-  const item = null;
-  for (let i = 0; i < things.length; i++) { // For as many objects as there are in the array-object, add the velocity to the items position.
-    item = things[i];
-    item.position.x = item.position.x + item.velocity.x;
-    item.position.y = item.position.y + item.velocity.y;
-
-    thingRangeCheck(item); // this could be the function to check if the position is out of the canvas or not.
-  }
-}
-
-renderAll() simply needs to call the moveThings(), and drawThings()
-setInterval(renderAll, 25)
-
-*/
