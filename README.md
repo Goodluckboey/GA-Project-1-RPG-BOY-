@@ -1,2 +1,2 @@
-# GA-Project-1-RPG-BOY-
-**RPG BOY!**
+# GA-Project-1
+## RPG Boy
