@@ -19,12 +19,14 @@ let gameOverTrigger = false
 let gameWinTrigger = false
 let playerScore = 0
 let timer = 30
+// let expPool = 0
+// let playerLevel = 1
 // HERO VARIABLES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 const pk1Timer = null;
 
 const pk1 = {img:null, width:32, height:32, currentframe:0, totalframes:5}
 pk1.img = new Image()
-pk1.img.src = "assets/char.png"
+pk1.img.src = "assets/char_level1.png"
 let Herosize = 2;
 let heroHealthBar = document.getElementById("health")
 function drawHero () {
@@ -90,11 +92,11 @@ window.addEventListener("keydown", function(e) {
         }
         pk1.currentframe++;
         if(directionChecker === 'atk-right'){
-            pk1.img.src = "assets/char.png"
+            pk1.img.src = "assets/char_level1.png"
             directionChecker = 'right'
         }
         if(directionChecker === 'atk-left'){
-            pk1.img.src = "assets/reverse_char.png"
+            pk1.img.src = "assets/reverse_char_level1.png"
             directionChecker = 'left'
         } 
     }
@@ -105,11 +107,11 @@ window.addEventListener("keydown", function(e) {
         }
         pk1.currentframe++;
         if(directionChecker === 'atk-right'){
-            pk1.img.src = "assets/char.png"
+            pk1.img.src = "assets/char_level1.png"
             directionChecker = 'right'
         }
         if(directionChecker === 'atk-left'){
-            pk1.img.src = "assets/reverse_char.png"
+            pk1.img.src = "assets/reverse_char_level1.png"
             directionChecker = 'left'
         } 
 
@@ -123,7 +125,7 @@ window.addEventListener("keydown", function(e) {
 
         pk1.currentframe++;
         if ( directionChecker !== 'left'){
-            pk1.img.src = "assets/reverse_char.png"
+            pk1.img.src = "assets/reverse_char_level1.png"
             directionChecker = 'left'
         }
     }
@@ -134,7 +136,7 @@ window.addEventListener("keydown", function(e) {
         }
         pk1.currentframe++;
         if ( directionChecker !== 'right'){
-            pk1.img.src = "assets/char.png"
+            pk1.img.src = "assets/char_level1.png"
             directionChecker = 'right'
         }
     }
@@ -405,7 +407,7 @@ gameWinTrigger = false
 monster.img.src = "assets/enemy_walk_level1.png"
 playerScore = 0
 timer = 30
-pk1.img.src = "assets/char.png"
+pk1.img.src = "assets/char_level1.png"
 console.log('Game reset!')
 makeMonster()
 
@@ -439,7 +441,7 @@ function nextLevel(){
   gameWinTrigger = false
   timer = 30
   monsterSize += 0.33
-  pk1.img.src = "assets/char.png"
+  pk1.img.src = "assets/char_level1.png"
   console.log('Next Level!')
   makeMonster()
   
