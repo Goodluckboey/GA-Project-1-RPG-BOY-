@@ -2,7 +2,7 @@
 let heroPosX = 0 //limit = 688
 let heroPosY = 0 //limit = 344
 let directionChecker = 'right'
-const NUMBER_OF_MONSTERS = 20
+let NUMBER_OF_MONSTERS = 20
 let heroRange = 65
 let heroStats = {
   maxHealth: 100,
@@ -31,11 +31,11 @@ function drawHero () {
 }
 
 function getDamage (){
-  let item = null;
+  let touchedMonster = null;
   for (let i = 0; i < monList.length; i++){ // => For every object in monList
-    item = monList[i];
-    if((heroPosX < item.position.x + 40) && (heroPosX > item.position.x - 40) && (heroPosY < item.position.y + 40) && (heroPosY > item.position.y - 40) && (gameStartTrigger === true)){
-      if(item.status === 'alive'){
+    touchedMonster = monList[i];
+    if((heroPosX < touchedMonster.position.x + 40) && (heroPosX > touchedMonster.position.x - 40) && (heroPosY < touchedMonster.position.y + 40) && (heroPosY > touchedMonster.position.y - 40) && (gameStartTrigger === true)){
+      if(touchedMonster.status === 'alive'){
         if(heroStats.currentHealth > 0){
         heroStats.currentHealth --
       } else {
@@ -61,6 +61,12 @@ window.addEventListener("keydown", function(e) {
     else {
     gameStartTrigger = false;
     startLogo.style.visibility = 'visible'
+    }
+  }
+
+  if(gameOverTrigger === true){
+    if(e.key === 'Enter'){
+      gameReset()
     }
   }
 
@@ -259,8 +265,8 @@ window.onload = function() {
 };
 
 function renderAll (){ // Clears the canvas, then draws everything every 25miliseconds.
-if(gameStartTrigger === true)
-{ context.clearRect(0,0,canvas.width, canvas.height);
+if(gameStartTrigger === true){
+  context.clearRect(0,0,canvas.width, canvas.height);
   heroHealthBar.value = heroStats.currentHealth
   heroHealthBar.max = heroStats.maxHealth
   document.getElementById('timer').value = timer
@@ -273,11 +279,14 @@ if(gameStartTrigger === true)
   gameWon ()
   document.getElementById('heart').style.left  = (((1355 * heroHealthBar.value) / 100) + 70)+"px";
   document.getElementById('hourglass').style.top  = (((840 * timer) / 30) - 70)+"px";
-  displayScore.innerText = `Your Score: ${playerScore}`
-  displayHiScore.innerText = `High Score: ${highScore}`
   if(playerScore > highScore){
     localStorage.setItem("HighScore", playerScore);
   }
+  displayScore.innerText = `Your Score: ${playerScore}`
+  displayHiScore.innerText = `High Score: ${highScore}`
+  console.log(`This is the element: ${displayHiScore.innerText}`)
+  console.log(`This is the HiScore: ${highScore}`)
+
   // if(highScore === null){
   //   highScore = 'No Players Yet!'
   // }
@@ -309,7 +318,7 @@ gameWin.img.src = "assets/you-win.png"
 
 function gameOverState (){
   if(gameOverTrigger === true){
-    context.drawImage(gameOver.img, 5 , 10 , 600 , 500 , 600 , 250 , 350, 300)
+    context.drawImage(gameOver.img, 5 , 10 , 600 , 500 , 500 , 150 , 700, 600)
     gameStartTrigger = false;
   }
 }
@@ -323,6 +332,7 @@ function gameWon (){
 }
 
 function gameReset(){
+context.clearRect(0,0,canvas.width, canvas.height);
 heroPosX = 0 //limit = 688
 heroPosY = 0 //limit = 344
 directionChecker = 'right'
@@ -339,6 +349,14 @@ gameStartTrigger = false
 gameOverTrigger = false
 playerScore = 0
 timer = 30
+pk1.img.src = "assets/char.png"
+console.log('Game reset!')
+makeMonster()
+
+if(playerScore > highScore){
+  localStorage.setItem("HighScore", playerScore);
+}
+
 }
 
 // ---------------------------------------------------

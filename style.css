@@ -3,7 +3,7 @@ body {
     max-width: 1464px;
     background-size: 100% 100%;
     position: relative;
-    /* background-image: url('assets/body_bg.png'); */
+    background-image: url('assets/body_bg.png');
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
