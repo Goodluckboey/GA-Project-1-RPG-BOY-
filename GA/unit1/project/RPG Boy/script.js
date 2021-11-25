@@ -272,6 +272,7 @@ if(gameStartTrigger === true)
   gameOverState()
   gameWon ()
   document.getElementById('heart').style.left  = (((1355 * heroHealthBar.value) / 100) + 70)+"px";
+  document.getElementById('hourglass').style.top  = (((840 * timer) / 30) - 70)+"px";
   displayScore.innerText = `Your Score: ${playerScore}`
   displayHiScore.innerText = `High Score: ${highScore}`
   if(playerScore > highScore){
@@ -319,6 +320,25 @@ function gameWon (){
     gameStartTrigger = false;
   }
   
+}
+
+function gameReset(){
+heroPosX = 0 //limit = 688
+heroPosY = 0 //limit = 344
+directionChecker = 'right'
+NUMBER_OF_MONSTERS = 20
+heroRange = 65
+heroStats = {
+  maxHealth: 100,
+  currentHealth: 100
+}
+
+monList = [];
+graveStoneList = []
+gameStartTrigger = false
+gameOverTrigger = false
+playerScore = 0
+timer = 30
 }
 
 // ---------------------------------------------------

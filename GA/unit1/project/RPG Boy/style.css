@@ -3,7 +3,7 @@ body {
     max-width: 1464px;
     background-size: 100% 100%;
     position: relative;
-    background-image: url('assets/body_bg.png');
+    /* background-image: url('assets/body_bg.png'); */
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
@@ -36,7 +36,15 @@ body {
     height:65px;
     bottom: 190px;
     left: 1425px; 
-    /* 1335 value for the entire bar */
+    /* 1355 value for the entire bar */
+}
+
+#hourglass {
+  position:absolute;
+  height:100px;
+  top: 770px;
+  left: 1462px; 
+  /* 1355 value for the entire bar */
 }
 
 progress {
@@ -68,7 +76,7 @@ progress#health {
     left: 1080px;
     height: 50px;
     width: 830px;
-    transform: rotate(270deg);
+    transform: rotate(90deg);
 }
 
 progress#timer {
