@@ -19,6 +19,7 @@ let gameOverTrigger = false
 let gameWinTrigger = false
 let playerScore = 0
 let timer = 30
+let levelBackground = document.getElementById('background')
 // let expPool = 0
 // let playerLevel = 1
 // HERO VARIABLES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -405,6 +406,7 @@ gameStartTrigger = false
 gameOverTrigger = false
 gameWinTrigger = false
 monster.img.src = "assets/enemy_walk_level1.png"
+levelBackground.img.src = "assets/darkerGrass.png"
 playerScore = 0
 timer = 30
 pk1.img.src = "assets/char_level1.png"
@@ -449,6 +451,7 @@ function nextLevel(){
     localStorage.setItem("HighScore", playerScore);
   }
   determineMonster()
+  determineBackground()
   }
 
 function determineMonster() {
@@ -458,6 +461,17 @@ function determineMonster() {
     monster.img.src = "assets/enemy_walk_level3.png"
   } else if(floorLevel === 4){
     monster.img.src = "assets/enemy_walk_level4.png"
+  }
+}
+
+function determineBackground() {
+  // console.log('determineBackground!!')
+  if(floorLevel === 2){
+    levelBackground.src = "assets/darkerGrass_level2.png"
+  } else if(floorLevel === 3){
+    levelBackground.src = "assets/darkerGrass_level3.png"
+  } else if(floorLevel === 4){
+    levelBackground.src = "assets/darkerGrass_level4.png"
   }
 }
 // ---------------------------------------------------
