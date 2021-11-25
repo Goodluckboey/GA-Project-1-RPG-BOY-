@@ -2,7 +2,7 @@
 let heroPosX = 0 //limit = 688
 let heroPosY = 0 //limit = 344
 let directionChecker = 'right'
-let NUMBER_OF_MONSTERS = 23
+let NUMBER_OF_MONSTERS = 3
 let heroRange = 65
 let heroStats = {
   maxHealth: 100,
@@ -67,9 +67,15 @@ window.addEventListener("keydown", function(e) {
     }
   }
 
-  if((gameOverTrigger === true) || (gameWinTrigger === true)){
+  if((gameOverTrigger === true)){
     if(e.key === 'Enter'){
       gameReset()
+    }
+  }
+
+  if((gameWinTrigger === true)){
+    if(e.key === 'Enter'){
+      nextLevel()
     }
   }
 
@@ -264,6 +270,7 @@ const context = canvas.getContext("2d")
 let displayScore = document.getElementById('your-score')
 let displayHiScore = document.getElementById('highscore')
 const bGAudio = new Audio('assets/bg_music.mp3');
+let isBgPlaying = true
 const monsterAudio = new Audio('assets/monsterDead-one.mp3')
 const punchAudio = new Audio('assets/punch-fast.mp3')
 const gameOverAudio = new Audio('assets/losingSound.mp3')
@@ -323,6 +330,16 @@ function getRealHS (){
   return getHs
 }
 
+document.getElementById("mute").addEventListener("click", function() {
+  if (isBgPlaying === true){
+    bGAudio.muted = true;
+    isBgPlaying = false
+  } else {
+    bGAudio.muted = false;
+    isBgPlaying = true
+  }
+});
+
 // ---------------------------------------------------
 
 // >>>> GAME STATES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -361,7 +378,8 @@ context.clearRect(0,0,canvas.width, canvas.height);
 heroPosX = 0 //limit = 688
 heroPosY = 0 //limit = 344
 directionChecker = 'right'
-NUMBER_OF_MONSTERS = 20
+NUMBER_OF_MONSTERS = 3
+Herosize = 2
 heroRange = 65
 heroStats = {
   maxHealth: 100,
@@ -385,4 +403,46 @@ if(playerScore > highScore){
 
 }
 
+function nextLevel(){
+  bGAudio.load();
+  context.clearRect(0,0,canvas.width, canvas.height);
+  heroPosX = 0 //limit = 688
+  heroPosY = 0 //limit = 344
+  directionChecker = 'right'
+  NUMBER_OF_MONSTERS += 4
+  heroRange += 10
+  Herosize += 0.5
+  heroStats = {
+    maxHealth: 100,
+    currentHealth: 100
+  }
+  heroStats
+  monList = [];
+  graveStoneList = []
+  gameStartTrigger = false
+  gameOverTrigger = false
+  gameWinTrigger = false
+  timer = 30
+  pk1.img.src = "assets/char.png"
+  console.log('Next Level!')
+  makeMonster()
+  
+  if(playerScore > highScore){
+    localStorage.setItem("HighScore", playerScore);
+  }
+  
+  }
 // ---------------------------------------------------
+
+/* Interesting Code Points
+  - Producing the monsters.
+    - Solved from looking at random cube code online
+    https://codepen.io/jareilly/pen/mepMKN?editors=0010
+
+  - Drawing the hero
+  - 'Randomizing' the movements
+  - Progress Bar Color Error
+  - Local Storage error
+
+  -favicon.ico%20404%20(Not%20Found) error.
+*/
