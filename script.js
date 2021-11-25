@@ -13,6 +13,7 @@ let monList = [];
 let graveStoneList = []
 let gameStartTrigger = false
 let gameOverTrigger = false
+let gameWinTrigger = false
 let playerScore = 0
 let timer = 30
 // HERO VARIABLES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -64,7 +65,7 @@ window.addEventListener("keydown", function(e) {
     }
   }
 
-  if(gameOverTrigger === true){
+  if((gameOverTrigger === true) || (gameWinTrigger === true)){
     if(e.key === 'Enter'){
       gameReset()
     }
@@ -336,6 +337,7 @@ function gameWon (){
   if(graveStoneList.length === NUMBER_OF_MONSTERS){
     context.drawImage(gameWin.img, 5 , 10 , 1411 , 501 , 450 , 250 , 600, 400)
     gameStartTrigger = false;
+    gameWinTrigger = true;
   }
   
 }
