@@ -151,6 +151,7 @@ window.addEventListener("keydown", function(e) {
           }else {
             monster.status = 'dead'
             playerScore += 1
+            timer += 1
             heroStats.currentHealth += 5
             graveStoneList.push([monster.position.x,monster.position.y])
             monster.position.x = 9999
@@ -259,9 +260,12 @@ let displayScore = document.getElementById('your-score')
 let displayHiScore = document.getElementById('highscore')
 
 window.onload = function() {
+  displayScore.innerText = `Your Score: ${playerScore}`
+  displayHiScore.innerHTML = `High Score: ${highScore}`
   setInterval(renderAll,ANIMATION_INTERVAL)
   setInterval(getDamage,ANIMATION_INTERVAL)
   setInterval(secTimer30,1000)
+  // getRealHS()
 };
 
 function renderAll (){ // Clears the canvas, then draws everything every 25miliseconds.
@@ -283,14 +287,14 @@ if(gameStartTrigger === true){
     localStorage.setItem("HighScore", playerScore);
   }
   displayScore.innerText = `Your Score: ${playerScore}`
-  displayHiScore.innerText = `High Score: ${highScore}`
-  console.log(`This is the element: ${displayHiScore.innerText}`)
-  console.log(`This is the HiScore: ${highScore}`)
+  displayHiScore.innerHTML = `High Score: ${highScore}`
+  // console.log(`This is the element: ${displayHiScore.innerText}`)
+  // console.log(`This is the HiScore: ${highScore}`)
 
   // if(highScore === null){
   //   highScore = 'No Players Yet!'
   // }
-  displayHiScore.innerText = `High Score: ${highScore}`
+  displayHiScore.innerText = `High Score: ${getRealHS()}`
   }
 }
 makeMonster()
@@ -302,6 +306,11 @@ function secTimer30 (){
       gameOverTrigger = true
     }
   }
+}
+
+function getRealHS (){
+  const getHs = localStorage.getItem('HighScore')
+  return getHs
 }
 
 // ---------------------------------------------------
