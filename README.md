@@ -4,7 +4,7 @@
 ### Description
 - Control a pixel character to hunt and kill several monsters.
 - Clear the level by killing all of them before the alotted time.
-- Be weary of losing too much health or you could die!
+- Be wary of losing too much health or you could die!
 
 ### How to play
 - Use the Arrow-Keys to move RPG Boy around.
