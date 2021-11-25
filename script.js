@@ -2,7 +2,7 @@
 let heroPosX = 0 //limit = 688
 let heroPosY = 0 //limit = 344
 let directionChecker = 'right'
-let NUMBER_OF_MONSTERS = 20
+let NUMBER_OF_MONSTERS = 1
 let heroRange = 65
 let heroStats = {
   maxHealth: 100,
@@ -58,10 +58,12 @@ window.addEventListener("keydown", function(e) {
     const startLogo = document.getElementById('startImage')
     if (gameStartTrigger === false){
     startLogo.style.visibility = 'hidden'
-    gameStartTrigger = true}
+    gameStartTrigger = true
+    bGAudio.play();}
     else {
     gameStartTrigger = false;
     startLogo.style.visibility = 'visible'
+    bGAudio.pause();
     }
   }
 
@@ -142,6 +144,7 @@ window.addEventListener("keydown", function(e) {
         }
       }
     if (e.key === ' '){
+      punchAudio.play();
       let monster = null;
       for (let i = 0; i < monList.length; i++){ // => For every object in monList
         monster = monList[i];
@@ -151,6 +154,7 @@ window.addEventListener("keydown", function(e) {
             // console.log(`This monster has ${monster.health} hp left!`)
           }else {
             monster.status = 'dead'
+            monsterAudio.play();
             playerScore += 1
             timer += 1
             heroStats.currentHealth += 5
@@ -259,6 +263,11 @@ const canvas = document.getElementById('canvas')
 const context = canvas.getContext("2d")
 let displayScore = document.getElementById('your-score')
 let displayHiScore = document.getElementById('highscore')
+const bGAudio = new Audio('assets/bg_music.mp3');
+const monsterAudio = new Audio('assets/monsterDead-one.mp3')
+const punchAudio = new Audio('assets/punch-fast.mp3')
+const gameOverAudio = new Audio('assets/losingSound.mp3')
+const winAudio = new Audio('assets/winAudio.mp3')
 
 window.onload = function() {
   displayScore.innerText = `Your Score: ${playerScore}`
@@ -330,6 +339,8 @@ function gameOverState (){
   if(gameOverTrigger === true){
     context.drawImage(gameOver.img, 5 , 10 , 600 , 500 , 500 , 150 , 700, 600)
     gameStartTrigger = false;
+    bGAudio.pause();
+    gameOverAudio.play()
   }
 }
 
@@ -338,11 +349,14 @@ function gameWon (){
     context.drawImage(gameWin.img, 5 , 10 , 1411 , 501 , 450 , 250 , 600, 400)
     gameStartTrigger = false;
     gameWinTrigger = true;
+    winAudio.play()
+    bGAudio.pause()
   }
   
 }
 
 function gameReset(){
+bGAudio.load();
 context.clearRect(0,0,canvas.width, canvas.height);
 heroPosX = 0 //limit = 688
 heroPosY = 0 //limit = 344
@@ -358,6 +372,7 @@ monList = [];
 graveStoneList = []
 gameStartTrigger = false
 gameOverTrigger = false
+gameWinTrigger = false
 playerScore = 0
 timer = 30
 pk1.img.src = "assets/char.png"
