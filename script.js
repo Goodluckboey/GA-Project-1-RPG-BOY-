@@ -20,8 +20,9 @@ let gameWinTrigger = false
 let playerScore = 0
 let timer = 30
 let levelBackground = document.getElementById('background')
-// let expPool = 0
-// let playerLevel = 1
+// let expPool = 0                        << NOT IMPLEMENTED >>
+// let playerLevel = 1                    << NOT IMPLEMENTED >>
+
 // HERO VARIABLES >>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 const pk1Timer = null;
 
@@ -31,7 +32,7 @@ pk1.img.src = "assets/char_level1.png"
 let Herosize = 2;
 let heroHealthBar = document.getElementById("health")
 function drawHero () {
-  context.drawImage(pk1.img, pk1.currentframe * 32 , 0 , 32 , 32 , heroPosX ,heroPosY , 32 * Herosize, 32 * Herosize) // Draws Hero on canvas at heroPosX and heroPosY coordinates.
+  context.drawImage(pk1.img, pk1.currentframe * 32 , 0 , 32 , 32 , heroPosX ,heroPosY , 32 * Herosize, 32 * Herosize)
   if(pk1.currentframe>=pk1.totalframes){
     pk1.currentframe = 0
   }
@@ -39,7 +40,7 @@ function drawHero () {
 
 function getDamage (){
   let touchedMonster = null;
-  for (let i = 0; i < monList.length; i++){ // => For every object in monList
+  for (let i = 0; i < monList.length; i++){
     touchedMonster = monList[i];
     if((heroPosX < touchedMonster.position.x + monsterRange) && (heroPosX > touchedMonster.position.x - monsterRange) && (heroPosY < touchedMonster.position.y + monsterRange) && (heroPosY > touchedMonster.position.y - monsterRange) && (gameStartTrigger === true)){
       if(touchedMonster.status === 'alive'){
@@ -53,7 +54,6 @@ function getDamage (){
 
   }
     }
-  // }
 }
 
 
@@ -118,7 +118,6 @@ window.addEventListener("keydown", function(e) {
 
     }
     if(((e.key === 'ArrowLeft') || (e.key === 'a'))){
-        // myAudio.play();
         heroPosX-=heroAccel
         if(heroPosX < -48){
           heroPosX = 1464
@@ -158,12 +157,11 @@ window.addEventListener("keydown", function(e) {
     if (e.key === ' '){
       punchAudio.play();
       let monster = null;
-      for (let i = 0; i < monList.length; i++){ // => For every object in monList
+      for (let i = 0; i < monList.length; i++){ 
         monster = monList[i];
         if((heroPosX < monster.position.x + heroRange) && (heroPosX > monster.position.x - heroRange) && (heroPosY < monster.position.y + heroRange) && (heroPosY > monster.position.y - heroRange) && (gameStartTrigger === true)){
           if(monster.health > 0){
             monster.health -=1
-            // console.log(`This monster has ${monster.health} hp left!`)
           }else {
             monster.status = 'dead'
             monsterAudio.play();
@@ -202,12 +200,12 @@ function produceMonsterLocationY () {
   return Math.round(Math.random() * 500)
 }
 function produceRandomVelocity(){
-  let num = Math.round(Math.random()*1) + 1; // get random number
-  num *= Math.round(Math.random()) ? 1 : -1; // it will either return it as it is, or turn it negative bcos of -1
+  let num = Math.round(Math.random()*1) + 1; 
+  num *= Math.round(Math.random()) ? 1 : -1; 
   return num
 }
 
-function makeMonster (){ // creates an object with position, velocity and health. But wont show up on canvas as it hasnt been drawn yet.
+function makeMonster (){ 
   for (let i = 0; i < NUMBER_OF_MONSTERS; i++){
   monList.push({
     position: {
@@ -222,16 +220,16 @@ function makeMonster (){ // creates an object with position, velocity and health
       status: 'alive'
     }
   )}
-} // Number of objects created is limited to variable NUMBER_OF_MONSTERS.
+}
 
-function drawMonster (item) { // Actually draws the monster out, using coordinates from makeMonster()
-  context.drawImage(monster.img, monster.currentframe * 32 , 0 , 32 , 32 , item.position.x ,item.position.y , 32 * monsterSize, 32 * monsterSize) // Draws Monster on canvas at monsterPosX and monsterPosY coordinates.
+function drawMonster (item) { 
+  context.drawImage(monster.img, monster.currentframe * 32 , 0 , 32 , 32 , item.position.x ,item.position.y , 32 * monsterSize, 32 * monsterSize) 
   if(monster.currentframe>=monster.totalframes){
     monster.currentframe = 0
   }
 }
 
-function drawMonsterS(){ // Draws all the monsters out, according to the number of objects in monList.
+function drawMonsterS(){ 
   let item;
   for (let i = 0; i < monList.length;i++){
     item = monList[i]
@@ -241,9 +239,9 @@ function drawMonsterS(){ // Draws all the monsters out, according to the number 
 
 function moveMonster(){
   let item;
-  for (let i =0; i < monList.length; i++){ // => For every object in monList
+  for (let i =0; i < monList.length; i++){ 
     item = monList[i];
-    if(item.status === 'alive') // To make the monsters reappear once they go off screen.
+    if(item.status === 'alive') 
       {item.position.x += item.velocity.x;
       if (item.position.x > 1400){
         item.position.x = -16;
@@ -257,7 +255,6 @@ function moveMonster(){
         item.position.y = 780
       }
     
-    // console.log(`${item.position.x}, ${item.position.y}`)
    }
   }
 }
@@ -292,10 +289,9 @@ window.onload = function() {
   setInterval(renderAll,ANIMATION_INTERVAL)
   setInterval(getDamage,ANIMATION_INTERVAL)
   setInterval(secTimer30,1000)
-  // getRealHS()
 };
 
-function renderAll (){ // Clears the canvas, then draws everything every 25miliseconds.
+function renderAll (){ 
 if(gameStartTrigger === true){
   context.clearRect(0,0,canvas.width, canvas.height);
   heroHealthBar.value = heroStats.currentHealth
@@ -315,12 +311,7 @@ if(gameStartTrigger === true){
   }
   displayScore.innerText = `Your Score: ${playerScore}`
   displayHiScore.innerHTML = `High Score: ${highScore}`
-  // console.log(`This is the element: ${displayHiScore.innerText}`)
-  // console.log(`This is the HiScore: ${highScore}`)
 
-  // if(highScore === null){
-  //   highScore = 'No Players Yet!'
-  // }
   displayHiScore.innerText = `High Score: ${getRealHS()}`
   grabLevel.innerText = `Level: ${floorLevel}`
   }
@@ -406,9 +397,10 @@ gameStartTrigger = false
 gameOverTrigger = false
 gameWinTrigger = false
 monster.img.src = "assets/enemy_walk_level1.png"
-levelBackground.img.src = "assets/darkerGrass.png"
+levelBackground.src = "assets/darkerGrass.png"
 playerScore = 0
 timer = 30
+console.log(timer)
 pk1.img.src = "assets/char_level1.png"
 console.log('Game reset!')
 makeMonster()
@@ -465,7 +457,6 @@ function determineMonster() {
 }
 
 function determineBackground() {
-  // console.log('determineBackground!!')
   if(floorLevel === 2){
     levelBackground.src = "assets/darkerGrass_level2.png"
   } else if(floorLevel === 3){
@@ -475,16 +466,3 @@ function determineBackground() {
   }
 }
 // ---------------------------------------------------
-
-/* Interesting Code Points
-  - Producing the monsters.
-    - Solved from looking at random cube code online
-    https://codepen.io/jareilly/pen/mepMKN?editors=0010
-
-  - Drawing the hero
-  - 'Randomizing' the movements
-  - Progress Bar Color Error
-  - Local Storage error
-
-  -favicon.ico%20404%20(Not%20Found) error.
-*/
